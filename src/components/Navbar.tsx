@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { ThemeToggle } from "./ThemeToggle";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -45,6 +46,7 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-4">
+          <ThemeToggle />
           <Button variant="ghost" className="hidden md:flex hover:bg-primary/20">
             Log In
           </Button>
