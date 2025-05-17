@@ -5,44 +5,44 @@
 
 @layer base {
   :root {
-    --background: 230 30% 10%;
+    --background: 232 45% 10%;
     --foreground: 210 40% 98%;
 
-    --card: 230 30% 15%;
+    --card: 232 45% 15%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 230 30% 15%;
+    --popover: 232 45% 15%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 250 70% 60%;
+    --primary: 262 81% 65%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 245 70% 70%;
-    --secondary-foreground: 230 30% 10%;
+    --secondary: 180 75% 60%;
+    --secondary-foreground: 232 45% 10%;
 
-    --muted: 230 30% 20%;
+    --muted: 232 45% 20%;
     --muted-foreground: 215 20% 75%;
 
-    --accent: 175 70% 50%;
-    --accent-foreground: 230 30% 10%;
+    --accent: 290 90% 65%;
+    --accent-foreground: 232 45% 10%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 230 30% 25%;
-    --input: 230 30% 25%;
-    --ring: 250 70% 60%;
+    --border: 232 45% 25%;
+    --input: 232 45% 25%;
+    --ring: 262 81% 65%;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 230 30% 15%;
+    --sidebar-background: 232 45% 15%;
     --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 250 70% 60%;
+    --sidebar-primary: 262 81% 65%;
     --sidebar-primary-foreground: 210 40% 98%;
-    --sidebar-accent: 230 30% 20%;
+    --sidebar-accent: 232 45% 20%;
     --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 230 30% 25%;
-    --sidebar-ring: 250 70% 60%;
+    --sidebar-border: 232 45% 25%;
+    --sidebar-ring: 262 81% 65%;
   }
 }
 
@@ -64,11 +64,11 @@
   }
 
   .glass-card {
-    @apply bg-background/40 backdrop-blur-md border border-border/40 rounded-2xl shadow-lg;
+    @apply bg-background/40 backdrop-blur-md border border-accent/20 rounded-2xl shadow-lg;
   }
   
   .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-secondary via-primary to-accent;
   }
   
   .mask-image {
