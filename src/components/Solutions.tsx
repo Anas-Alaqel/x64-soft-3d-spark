@@ -130,23 +130,26 @@ const Solutions = () => {
   ];
 
   return (
-    <section id="solutions" className="section-padding relative">
+    <section id="solutions" className="section-padding relative overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-full bg-mesh opacity-40 -z-10"></div>
+      
       <div className="container mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
+            className="order-2 lg:order-1"
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 md:mb-6">
               Our <span className="gradient-text">Solutions</span>
             </h2>
-            <p className="text-lg text-foreground/80 mb-8">
+            <p className="text-base sm:text-lg text-foreground/80 mb-6 md:mb-8">
               x64-soft delivers integrated solutions that address complex business challenges across industries. Our team works closely with clients to understand their unique needs and develop customized technology solutions.
             </p>
             
-            <ul className="space-y-4 mb-8">
+            <ul className="space-y-3 sm:space-y-4 mb-6 md:mb-8">
               {solutions.map((solution, index) => (
                 <motion.li 
                   key={index}
@@ -154,17 +157,14 @@ const Solutions = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: "-100px" }}
                   transition={{ duration: 0.4, delay: index * 0.1 }}
-                  className="flex items-center"
+                  className="flex items-center diamond-bullet"
                 >
-                  <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center mr-3">
-                    <div className="w-2 h-2 rounded-full bg-primary"></div>
-                  </div>
                   <span>{solution}</span>
                 </motion.li>
               ))}
             </ul>
             
-            <Button className="bg-primary hover:bg-primary/90">
+            <Button className="bg-primary hover:bg-primary/90 glow">
               Explore All Solutions
             </Button>
           </motion.div>
@@ -174,9 +174,13 @@ const Solutions = () => {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1 }}
-            className="h-[400px] md:h-[500px] relative"
+            className="h-[300px] sm:h-[400px] md:h-[450px] relative order-1 lg:order-2"
           >
-            <div ref={containerRef} className="absolute inset-0"></div>
+            <div className="absolute inset-0">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-accent/20 rounded-full filter blur-3xl"></div>
+              <div className="absolute bottom-0 left-0 w-32 h-32 bg-secondary/20 rounded-full filter blur-3xl"></div>
+            </div>
+            <div ref={containerRef} className="absolute inset-0 z-10"></div>
           </motion.div>
         </div>
       </div>

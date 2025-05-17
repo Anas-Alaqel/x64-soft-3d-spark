@@ -17,9 +17,13 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-card pt-16 pb-8">
+    <footer className="bg-card pt-12 md:pt-16 pb-6 md:pb-8 relative overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute top-10 right-10 w-40 h-40 bg-primary/5 rounded-full filter blur-3xl"></div>
+      <div className="absolute bottom-10 left-10 w-40 h-40 bg-secondary/5 rounded-full filter blur-3xl"></div>
+      
       <div className="container mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 md:gap-10">
           <div className="lg:col-span-2">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -53,10 +57,10 @@ const Footer = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
           >
             <h3 className="font-semibold mb-4">Company</h3>
-            <ul className="space-y-3">
+            <ul className="space-y-2 md:space-y-3">
               {links.company.map((link) => (
                 <li key={link}>
-                  <a href="#" className="text-foreground/70 hover:text-foreground">
+                  <a href="#" className="text-foreground/70 hover:text-foreground transition-colors">
                     {link}
                   </a>
                 </li>
@@ -71,10 +75,10 @@ const Footer = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <h3 className="font-semibold mb-4">Services</h3>
-            <ul className="space-y-3">
+            <ul className="space-y-2 md:space-y-3">
               {links.services.map((link) => (
                 <li key={link}>
-                  <a href="#" className="text-foreground/70 hover:text-foreground">
+                  <a href="#" className="text-foreground/70 hover:text-foreground transition-colors">
                     {link}
                   </a>
                 </li>
@@ -89,10 +93,10 @@ const Footer = () => {
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             <h3 className="font-semibold mb-4">Legal</h3>
-            <ul className="space-y-3">
+            <ul className="space-y-2 md:space-y-3">
               {links.legal.map((link) => (
                 <li key={link}>
-                  <a href="#" className="text-foreground/70 hover:text-foreground">
+                  <a href="#" className="text-foreground/70 hover:text-foreground transition-colors">
                     {link}
                   </a>
                 </li>
@@ -106,7 +110,7 @@ const Footer = () => {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="border-t border-border mt-12 pt-8 text-center text-foreground/60 text-sm"
+          className="border-t border-border mt-10 md:mt-12 pt-6 md:pt-8 text-center text-foreground/60 text-sm"
         >
           <p>© {new Date().getFullYear()} x64-soft. All rights reserved.</p>
         </motion.div>

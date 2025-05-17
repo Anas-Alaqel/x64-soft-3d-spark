@@ -108,7 +108,7 @@ const Hero = () => {
     
     // Clean up
     return () => {
-      if (containerRef.current) {
+      if (containerRef.current && containerRef.current.contains(renderer.domElement)) {
         containerRef.current.removeChild(renderer.domElement);
       }
       window.removeEventListener('resize', handleResize);
@@ -123,13 +123,13 @@ const Hero = () => {
         <div ref={containerRef} className="w-full h-full"></div>
       </div>
       
-      <div className="container mx-auto relative z-20 pt-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+      <div className="container mx-auto relative z-20 pt-16 md:pt-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="space-y-6"
+            className="space-y-4 md:space-y-6 px-4 sm:px-0"
           >
             <motion.div 
               initial={{ opacity: 0 }}
@@ -142,16 +142,16 @@ const Hero = () => {
               </span>
             </motion.div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
               Revolutionary <span className="gradient-text">Software Solutions</span> for Modern Businesses
             </h1>
             
-            <p className="text-lg text-foreground/80 max-w-lg">
+            <p className="text-base sm:text-lg text-foreground/80 max-w-lg">
               x64-soft delivers cutting-edge software solutions that transform businesses through innovation, efficiency, and technological excellence.
             </p>
             
-            <div className="flex flex-wrap gap-4 pt-4">
-              <Button size="lg" className="bg-primary hover:bg-primary/90">
+            <div className="flex flex-wrap gap-3 sm:gap-4 pt-2 sm:pt-4">
+              <Button size="lg" className="bg-primary hover:bg-primary/90 glow">
                 Discover Solutions
               </Button>
               <Button size="lg" variant="outline" className="border-primary/50 hover:bg-primary/20">
@@ -159,14 +159,60 @@ const Hero = () => {
               </Button>
             </div>
             
-            <div className="pt-8">
+            <div className="pt-6 sm:pt-8">
               <p className="text-sm text-foreground/60 mb-3">Trusted by industry leaders</p>
-              <div className="flex flex-wrap gap-8 opacity-70">
-                <div className="h-8 w-24 bg-foreground/20 rounded-md"></div>
-                <div className="h-8 w-24 bg-foreground/20 rounded-md"></div>
-                <div className="h-8 w-24 bg-foreground/20 rounded-md"></div>
-                <div className="h-8 w-24 bg-foreground/20 rounded-md"></div>
+              <div className="flex flex-wrap gap-4 sm:gap-8 opacity-70">
+                <div className="h-6 sm:h-8 w-16 sm:w-24 bg-foreground/20 rounded-md"></div>
+                <div className="h-6 sm:h-8 w-16 sm:w-24 bg-foreground/20 rounded-md"></div>
+                <div className="h-6 sm:h-8 w-16 sm:w-24 bg-foreground/20 rounded-md"></div>
+                <div className="h-6 sm:h-8 w-16 sm:w-24 bg-foreground/20 rounded-md"></div>
               </div>
+            </div>
+          </motion.div>
+          
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.5 }}
+            className="hidden lg:block"
+          >
+            <div className="relative">
+              <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/30 rounded-full filter blur-3xl"></div>
+              <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-secondary/30 rounded-full filter blur-3xl"></div>
+              
+              <motion.div 
+                className="glass-card card-shimmer p-6 md:p-8 relative z-10 rounded-2xl"
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="h-10 w-10 rounded-xl bg-accent/20 flex items-center justify-center">
+                      <div className="h-5 w-5 rounded-full bg-accent"></div>
+                    </div>
+                    <div className="flex space-x-2">
+                      <div className="h-3 w-3 rounded-full bg-secondary"></div>
+                      <div className="h-3 w-3 rounded-full bg-primary"></div>
+                      <div className="h-3 w-3 rounded-full bg-accent"></div>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <div className="h-4 w-3/4 bg-foreground/20 rounded"></div>
+                    <div className="h-4 w-full bg-foreground/10 rounded"></div>
+                    <div className="h-4 w-5/6 bg-foreground/15 rounded"></div>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="h-20 bg-foreground/5 rounded-lg"></div>
+                    <div className="h-20 bg-foreground/5 rounded-lg"></div>
+                  </div>
+                  
+                  <div className="pt-2 flex justify-end">
+                    <div className="h-8 w-24 bg-primary/20 rounded-md"></div>
+                  </div>
+                </div>
+              </motion.div>
             </div>
           </motion.div>
         </div>
