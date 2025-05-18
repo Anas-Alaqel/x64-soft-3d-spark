@@ -1,0 +1,73 @@
+
+@layer utilities {
+  /* RTL Support */
+  .flip-rtl {
+    @apply rtl:-scale-x-100 rtl:mr-auto;
+  }
+  
+  .margin-start {
+    @apply ltr:ml-2 rtl:mr-2;
+  }
+  
+  .margin-end {
+    @apply ltr:mr-2 rtl:ml-2;
+  }
+  
+  /* Responsive Utilities */
+  .responsive-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4;
+  }
+  
+  .responsive-padding {
+    @apply p-4 sm:p-6 md:p-8 lg:p-10;
+  }
+  
+  .responsive-text {
+    @apply text-base sm:text-lg md:text-xl lg:text-2xl;
+  }
+}
+
+@layer utilities {
+  /* Creative Utilities */
+  .diamond-bullet::before {
+    content: '◆';
+    @apply mr-2 text-primary;
+  }
+  
+  .rainbow-border {
+    @apply relative;
+  }
+  
+  .rainbow-border::before {
+    content: '';
+    @apply absolute inset-0 -z-10 rounded-[calc(var(--radius)+1px)] p-[1px] bg-gradient-to-r from-primary to-accent animate-gradient;
+  }
+  
+  .floating {
+    animation: floating 6s ease-in-out infinite;
+  }
+  
+  @keyframes floating {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  
+  .pulse {
+    animation: pulse 3s ease-in-out infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.8;
+      transform: scale(1.05);
+    }
+  }
+}

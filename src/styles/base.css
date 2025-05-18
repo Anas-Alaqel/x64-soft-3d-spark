@@ -1,0 +1,109 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222 14% 12%;
+
+    --card: 0 0% 98%;
+    --card-foreground: 222 14% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 14% 12%;
+
+    --primary: 174 98% 53%;  /* #13FDEE */
+    --primary-foreground: 222 14% 12%;
+
+    --secondary: 240 5% 12%;  /* #1C1C1E */
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 0 0% 92%;
+    --muted-foreground: 222 10% 40%;
+
+    --accent: 174 98% 53%;  /* Based on primary color */
+    --accent-foreground: 222 14% 12%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 222 10% 90%;
+    --input: 222 10% 90%;
+    --ring: 174 98% 53%;  /* #13FDEE */
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 222 14% 12%;
+    --sidebar-primary: 174 98% 53%;  /* #13FDEE */
+    --sidebar-primary-foreground: 222 14% 12%;
+    --sidebar-accent: 0 0% 92%;
+    --sidebar-accent-foreground: 222 14% 12%;
+    --sidebar-border: 222 10% 90%;
+    --sidebar-ring: 174 98% 53%;  /* #13FDEE */
+  }
+
+  .dark {
+    --background: 222 14% 12%;
+    --foreground: 210 40% 98%;
+
+    --card: 240 5% 12%;  /* #1C1C1E */
+    --card-foreground: 210 40% 98%;
+
+    --popover: 240 5% 12%;  /* #1C1C1E */
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 174 98% 53%;  /* #13FDEE */
+    --primary-foreground: 222 14% 12%;
+
+    --secondary: 240 5% 12%;  /* #1C1C1E */
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 222 14% 20%;
+    --muted-foreground: 215 20% 75%;
+
+    --accent: 174 98% 53%;  /* Based on primary color */
+    --accent-foreground: 222 14% 12%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 222 14% 25%;
+    --input: 222 14% 25%;
+    --ring: 174 98% 53%;  /* #13FDEE */
+
+    --sidebar-background: 240 5% 12%;  /* #1C1C1E */
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 174 98% 53%;  /* #13FDEE */
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 222 14% 20%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 222 14% 25%;
+    --sidebar-ring: 174 98% 53%;  /* #13FDEE */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* RTL Support */
+  .rtl {
+    direction: rtl;
+  }
+
+  .container {
+    @apply px-4 md:px-6 lg:px-8 xl:px-10;
+  }
+  
+  .section-padding {
+    @apply py-12 md:py-16 lg:py-24;
+  }
+}

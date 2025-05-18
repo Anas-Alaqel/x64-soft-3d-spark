@@ -1,8 +1,10 @@
-
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import * as THREE from "three";
+// Import these separately since they're not part of the core THREE export
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 
 const Solutions = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -103,7 +105,7 @@ const Solutions = () => {
     // Add text "x64" on the processor
     const fontLoader = new THREE.FontLoader();
     const createTextGeometry = () => {
-      const textGeometry = new THREE.TextGeometry('x64', {
+      const textGeometry = new TextGeometry('x64', {
         font: new THREE.Font({}),  // We need to load the font
         size: 1.2,
         height: 0.1,

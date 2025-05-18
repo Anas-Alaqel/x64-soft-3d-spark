@@ -1,0 +1,126 @@
+
+@layer components {
+  /* Animated Words */
+  .animated-words-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .animated-words-wrapper {
+    position: relative;
+  }
+  
+  .animate-word {
+    position: relative;
+    background-size: 200% auto;
+    animation: gradient-shift 8s ease infinite;
+  }
+  
+  /* Processor Animation Effects */
+  .processor-pin {
+    @apply relative;
+  }
+  
+  .processor-pin::after {
+    content: '';
+    @apply absolute inset-0 -z-10 rounded-full blur-sm opacity-70 bg-primary transform scale-105;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  
+  .processor-circuit {
+    @apply relative;
+    animation: circuit-pulse 4s ease-in-out infinite;
+  }
+  
+  @keyframes circuit-pulse {
+    0%, 100% {
+      opacity: 0.4;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+}
+
+@layer components {
+  /* Creative Elements */
+  .glow {
+    @apply relative;
+  }
+  
+  .glow::after {
+    content: '';
+    @apply absolute inset-0 -z-10 rounded-inherit blur-lg opacity-50 bg-gradient-to-r from-primary to-accent transform scale-105;
+  }
+  
+  .bg-mesh {
+    background-image: radial-gradient(circle at center, rgba(var(--primary), 0.05) 0%, transparent 70%), 
+                       radial-gradient(circle at 80% 20%, rgba(var(--accent), 0.05) 0%, transparent 50%),
+                       radial-gradient(circle at 20% 80%, rgba(var(--secondary), 0.05) 0%, transparent 50%);
+    background-size: 100% 100%;
+  }
+  
+  .card-shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .card-shimmer::after {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: -100%;
+    width: 300%;
+    height: 300%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: rotate(45deg);
+    animation: shimmer 6s linear infinite;
+  }
+}
+
+@layer components {
+  /* Text Color Animation */
+  .color-animate-text {
+    background: linear-gradient(
+      90deg, 
+      #13FDEE, 
+      #9b87f5, 
+      #D946EF, 
+      #13FDEE
+    );
+    background-size: 300% 300%;
+    animation: gradient-flow 8s ease infinite;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  
+  @keyframes gradient-flow {
+    0% { background-position: 0% 50% }
+    50% { background-position: 100% 50% }
+    100% { background-position: 0% 50% }
+  }
+  
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%) rotate(45deg);
+    }
+    100% {
+      transform: translateX(100%) rotate(45deg);
+    }
+  }
+  
+  @keyframes gradient-shift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+  
+  .animate-gradient {
+    background-size: 200% auto;
+    animation: gradient-shift 8s ease infinite;
+  }
+}
