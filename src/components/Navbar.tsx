@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ThemeToggle } from "./ThemeToggle";
+import { LangToggle } from "./LangToggle";
 import { Menu, X } from "lucide-react";
 
 const Navbar = () => {
@@ -39,8 +40,17 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto flex items-center justify-between">
-        <a href="#hero" className="flex items-center gap-2 z-50">
-          <span className="text-xl sm:text-2xl font-bold gradient-text">x64-soft</span>
+        <a href="#hero" className="flex items-center gap-2 z-50 group">
+          <div className="relative w-8 h-8 sm:w-10 sm:h-10">
+            <div className="absolute inset-0 bg-primary/20 rounded-full filter blur-sm group-hover:blur-md transition-all duration-300"></div>
+            <div className="relative w-full h-full flex items-center justify-center">
+              <span className="text-lg sm:text-xl font-bold text-primary">x64</span>
+            </div>
+          </div>
+          <span className="text-xl sm:text-2xl font-bold gradient-text relative">
+            <span className="relative z-10">x64-soft</span>
+            <span className="absolute top-0 left-0 w-full h-full blur-sm opacity-70 text-primary">x64-soft</span>
+          </span>
         </a>
 
         {/* Desktop Nav */}
@@ -57,6 +67,7 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-2 sm:gap-4 z-50">
+          <LangToggle />
           <ThemeToggle />
           <Button variant="ghost" className="hidden md:flex hover:bg-primary/20">
             Log In
