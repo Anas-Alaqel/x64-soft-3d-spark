@@ -119,6 +119,31 @@
     mask-image: linear-gradient(to bottom, black 75%, transparent 100%);
   }
 
+  /* 3D Effects */
+  .perspective-500 {
+    perspective: 500px;
+  }
+  
+  .transform-style-3d {
+    transform-style: preserve-3d;
+  }
+  
+  /* Animated Words */
+  .animated-words-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .animated-words-wrapper {
+    position: relative;
+  }
+  
+  .animate-word {
+    position: relative;
+    background-size: 200% auto;
+    animation: gradient-shift 8s ease infinite;
+  }
+  
   /* Creative Elements */
   .glow {
     @apply relative;
