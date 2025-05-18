@@ -24,11 +24,11 @@ export function ThemeToggle() {
       <DropdownMenuContent align="end" className="bg-background/95 backdrop-blur-sm border-accent/20">
         <DropdownMenuItem onClick={() => setTheme("light")} className="hover:bg-primary/10">
           <Sun className="mr-2 h-4 w-4" />
-          Light
+          <span className="ltr:ml-2 rtl:mr-2">Light</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("dark")} className="hover:bg-primary/10">
           <Moon className="mr-2 h-4 w-4" />
-          Dark
+          <span className="ltr:ml-2 rtl:mr-2">Dark</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("system")} className="hover:bg-primary/10">
           <svg
@@ -46,7 +46,7 @@ export function ThemeToggle() {
             <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
             <line x1="8" x2="16" y1="21" y2="21" />
           </svg>
-          System
+          <span className="ltr:ml-2 rtl:mr-2">System</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
