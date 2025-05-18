@@ -157,7 +157,7 @@ const Hero = () => {
                     }}
                     className="inline-block animate-word"
                   >
-                    <span className="bg-gradient-to-r from-primary to-[#9b87f5] text-transparent bg-clip-text">Revolutionary</span>
+                    <span className="bg-gradient-to-r from-primary to-[#9b87f5] text-transparent bg-clip-text animate-gradient">Revolutionary</span>
                   </motion.span>{" "}
                   <motion.span
                     initial={{ opacity: 1 }}
@@ -171,7 +171,7 @@ const Hero = () => {
                     }}
                     className="inline-block animate-word"
                   >
-                    <span className="bg-gradient-to-r from-[#9b87f5] to-[#D946EF] text-transparent bg-clip-text">Software Solutions</span>
+                    <span className="bg-gradient-to-r from-[#9b87f5] to-[#D946EF] text-transparent bg-clip-text animate-gradient">Software Solutions</span>
                   </motion.span>{" "}
                   <motion.span
                     initial={{ opacity: 1 }}
@@ -185,7 +185,7 @@ const Hero = () => {
                     }}
                     className="inline-block animate-word"
                   >
-                    <span className="bg-gradient-to-r from-[#D946EF] to-primary text-transparent bg-clip-text">for Modern Businesses</span>
+                    <span className="bg-gradient-to-r from-[#D946EF] to-primary text-transparent bg-clip-text animate-gradient">for Modern Businesses</span>
                   </motion.span>
                 </div>
               </div>

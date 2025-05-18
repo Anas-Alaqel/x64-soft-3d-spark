@@ -144,6 +144,31 @@
     animation: gradient-shift 8s ease infinite;
   }
   
+  /* Processor Animation Effects */
+  .processor-pin {
+    @apply relative;
+  }
+  
+  .processor-pin::after {
+    content: '';
+    @apply absolute inset-0 -z-10 rounded-full blur-sm opacity-70 bg-primary transform scale-105;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  
+  .processor-circuit {
+    @apply relative;
+    animation: circuit-pulse 4s ease-in-out infinite;
+  }
+  
+  @keyframes circuit-pulse {
+    0%, 100% {
+      opacity: 0.4;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+  
   /* Creative Elements */
   .glow {
     @apply relative;
@@ -176,6 +201,28 @@
     background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
     transform: rotate(45deg);
     animation: shimmer 6s linear infinite;
+  }
+  
+  /* Text Color Animation */
+  .color-animate-text {
+    background: linear-gradient(
+      90deg, 
+      #13FDEE, 
+      #9b87f5, 
+      #D946EF, 
+      #13FDEE
+    );
+    background-size: 300% 300%;
+    animation: gradient-flow 8s ease infinite;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  
+  @keyframes gradient-flow {
+    0% { background-position: 0% 50% }
+    50% { background-position: 100% 50% }
+    100% { background-position: 0% 50% }
   }
   
   @keyframes shimmer {

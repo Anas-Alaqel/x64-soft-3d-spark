@@ -32,54 +32,98 @@ const Solutions = () => {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
     
-    // Create a group of cubes
-    const group = new THREE.Group();
-    scene.add(group);
+    // Create a processor-like structure
+    const processorGroup = new THREE.Group();
+    scene.add(processorGroup);
     
-    // Materials
-    const materials = [
-      new THREE.MeshBasicMaterial({ color: 0x9b87f5, wireframe: true }),
-      new THREE.MeshBasicMaterial({ color: 0x33ffff, wireframe: true }),
-      new THREE.MeshBasicMaterial({ color: 0xff6692, wireframe: true })
-    ];
+    // Processor base
+    const baseGeometry = new THREE.BoxGeometry(8, 0.5, 8);
+    const baseMaterial = new THREE.MeshBasicMaterial({ color: 0x33ffff, wireframe: true });
+    const processorBase = new THREE.Mesh(baseGeometry, baseMaterial);
+    processorGroup.add(processorBase);
     
-    // Create cubes
-    const geometry = new THREE.BoxGeometry(2, 2, 2);
+    // Processor chip
+    const chipGeometry = new THREE.BoxGeometry(6, 0.8, 6);
+    const chipMaterial = new THREE.MeshBasicMaterial({ color: 0x9b87f5, wireframe: true });
+    const processorChip = new THREE.Mesh(chipGeometry, chipMaterial);
+    processorChip.position.y = 0.7;
+    processorGroup.add(processorChip);
     
-    for (let i = 0; i < 10; i++) {
-      const mesh = new THREE.Mesh(
-        geometry,
-        materials[i % materials.length]
+    // Add circuit lines
+    const createCircuitLine = (x: number, z: number, length: number, isHorizontal: boolean) => {
+      const lineGeometry = new THREE.BoxGeometry(
+        isHorizontal ? length : 0.1, 
+        0.2, 
+        isHorizontal ? 0.1 : length
       );
-      
-      // Position randomly but in a certain area
-      mesh.position.x = (Math.random() - 0.5) * 15;
-      mesh.position.y = (Math.random() - 0.5) * 15;
-      mesh.position.z = (Math.random() - 0.5) * 15;
-      
-      // Random rotation
-      mesh.rotation.x = Math.random() * Math.PI;
-      mesh.rotation.y = Math.random() * Math.PI;
-      
-      // Random scale
-      const scale = Math.random() * 0.8 + 0.6;
-      mesh.scale.set(scale, scale, scale);
-      
-      group.add(mesh);
+      const lineMaterial = new THREE.MeshBasicMaterial({ color: 0xff6692 });
+      const line = new THREE.Mesh(lineGeometry, lineMaterial);
+      line.position.set(x, 1.3, z);
+      return line;
+    };
+    
+    // Horizontal lines
+    for (let i = -2; i <= 2; i += 1) {
+      const line = createCircuitLine(-2.5, i, 5, true);
+      processorGroup.add(line);
     }
+    
+    // Vertical lines
+    for (let i = -2; i <= 2; i += 1) {
+      const line = createCircuitLine(i, -2.5, 5, false);
+      processorGroup.add(line);
+    }
+    
+    // Add processor pins
+    const createProcessorPin = (x: number, z: number) => {
+      const pinGeometry = new THREE.CylinderGeometry(0.15, 0.15, 0.6, 8);
+      const pinMaterial = new THREE.MeshBasicMaterial({ color: 0x33ffff });
+      const pin = new THREE.Mesh(pinGeometry, pinMaterial);
+      pin.position.set(x, -0.3, z);
+      return pin;
+    };
+    
+    // Create pins in a grid pattern
+    const pinDistance = 0.8;
+    const pinRows = 6;
+    const pinCols = 6;
+    
+    for (let i = 0; i < pinRows; i++) {
+      for (let j = 0; j < pinCols; j++) {
+        // Skip some pins to create a more authentic processor look
+        if ((i === 2 || i === 3) && (j === 2 || j === 3)) continue;
+        
+        const x = (i - pinRows / 2 + 0.5) * pinDistance;
+        const z = (j - pinCols / 2 + 0.5) * pinDistance;
+        const pin = createProcessorPin(x, z);
+        processorGroup.add(pin);
+      }
+    }
+    
+    // Add text "x64" on the processor
+    const fontLoader = new THREE.FontLoader();
+    const createTextGeometry = () => {
+      const textGeometry = new THREE.TextGeometry('x64', {
+        font: new THREE.Font({}),  // We need to load the font
+        size: 1.2,
+        height: 0.1,
+      });
+      const textMaterial = new THREE.MeshBasicMaterial({ color: 0x13FDEE });
+      const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+      textMesh.position.set(-1, 1.2, 0);
+      processorGroup.add(textMesh);
+    };
     
     // Animation
     const animate = () => {
       requestAnimationFrame(animate);
       
-      group.rotation.y += 0.002;
-      group.rotation.x += 0.001;
+      processorGroup.rotation.y += 0.005;
       
-      // Animate each cube individually
-      group.children.forEach((cube, i) => {
-        cube.rotation.x += 0.003 * (i % 2 === 0 ? 1 : -1);
-        cube.rotation.y += 0.005 * (i % 3 === 0 ? 1 : -1);
-      });
+      // Pulse animation for the processor chip
+      const time = Date.now() * 0.001;
+      const pulseScale = 1 + Math.sin(time * 2) * 0.03;
+      processorChip.scale.set(1, pulseScale, 1);
       
       renderer.render(scene, camera);
     };
@@ -103,9 +147,18 @@ const Solutions = () => {
       const x = (event.clientX / window.innerWidth) * 2 - 1;
       const y = -(event.clientY / window.innerHeight) * 2 + 1;
       
-      group.rotation.y = x * 0.2;
-      group.rotation.x = y * 0.2;
+      processorGroup.rotation.y = x * 0.5 + time * 0.1;
+      processorGroup.rotation.x = y * 0.3;
     };
+    
+    let time = 0;
+    const autoRotate = () => {
+      time += 0.01;
+      processorGroup.rotation.y = Math.sin(time) * 0.5;
+      processorGroup.rotation.x = Math.cos(time) * 0.2;
+      requestAnimationFrame(autoRotate);
+    };
+    autoRotate();
     
     container.addEventListener('mousemove', handleMouseMove);
     
