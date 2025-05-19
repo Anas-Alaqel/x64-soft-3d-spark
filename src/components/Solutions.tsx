@@ -1,11 +1,7 @@
-
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import * as THREE from "three";
-// Import these separately with proper typing
-import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
-import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 
 const Solutions = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -24,7 +20,7 @@ const Solutions = () => {
       0.1,
       1000
     );
-    camera.position.z = 10;
+    camera.position.z = 8;
     
     // Renderer
     const renderer = new THREE.WebGLRenderer({ 
@@ -35,119 +31,197 @@ const Solutions = () => {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
     
-    // Create a processor-like structure
-    const processorGroup = new THREE.Group();
-    scene.add(processorGroup);
+    // Create x64 display group
+    const x64Group = new THREE.Group();
+    scene.add(x64Group);
     
-    // Processor base
-    const baseGeometry = new THREE.BoxGeometry(8, 0.5, 8);
-    const baseMaterial = new THREE.MeshBasicMaterial({ color: 0x33ffff, wireframe: true });
-    const processorBase = new THREE.Mesh(baseGeometry, baseMaterial);
-    processorGroup.add(processorBase);
-    
-    // Processor chip
-    const chipGeometry = new THREE.BoxGeometry(6, 0.8, 6);
-    const chipMaterial = new THREE.MeshBasicMaterial({ color: 0x9b87f5, wireframe: true });
-    const processorChip = new THREE.Mesh(chipGeometry, chipMaterial);
-    processorChip.position.y = 0.7;
-    processorGroup.add(processorChip);
-    
-    // Add circuit lines
-    const createCircuitLine = (x: number, z: number, length: number, isHorizontal: boolean) => {
-      const lineGeometry = new THREE.BoxGeometry(
-        isHorizontal ? length : 0.1, 
-        0.2, 
-        isHorizontal ? 0.1 : length
-      );
-      const lineMaterial = new THREE.MeshBasicMaterial({ color: 0xff6692 });
-      const line = new THREE.Mesh(lineGeometry, lineMaterial);
-      line.position.set(x, 1.3, z);
-      return line;
-    };
-    
-    // Horizontal lines
-    for (let i = -2; i <= 2; i += 1) {
-      const line = createCircuitLine(-2.5, i, 5, true);
-      processorGroup.add(line);
-    }
-    
-    // Vertical lines
-    for (let i = -2; i <= 2; i += 1) {
-      const line = createCircuitLine(i, -2.5, 5, false);
-      processorGroup.add(line);
-    }
-    
-    // Add processor pins
-    const createProcessorPin = (x: number, z: number) => {
-      const pinGeometry = new THREE.CylinderGeometry(0.15, 0.15, 0.6, 8);
-      const pinMaterial = new THREE.MeshBasicMaterial({ color: 0x33ffff });
-      const pin = new THREE.Mesh(pinGeometry, pinMaterial);
-      pin.position.set(x, -0.3, z);
-      return pin;
-    };
-    
-    // Create pins in a grid pattern
-    const pinDistance = 0.8;
-    const pinRows = 6;
-    const pinCols = 6;
-    
-    for (let i = 0; i < pinRows; i++) {
-      for (let j = 0; j < pinCols; j++) {
-        // Skip some pins to create a more authentic processor look
-        if ((i === 2 || i === 3) && (j === 2 || j === 3)) continue;
+    // Create spectacular x64 text
+    const createX64Text = () => {
+      // Create multiple layers for depth effect
+      const layers = 10;
+      const layerDepth = 0.05;
+      const textGroup = new THREE.Group();
+      
+      for (let i = 0; i < layers; i++) {
+        const canvas = document.createElement('canvas');
+        canvas.width = 512;
+        canvas.height = 256;
         
-        const x = (i - pinRows / 2 + 0.5) * pinDistance;
-        const z = (j - pinCols / 2 + 0.5) * pinDistance;
-        const pin = createProcessorPin(x, z);
-        processorGroup.add(pin);
+        const context = canvas.getContext('2d');
+        if (!context) continue;
+        
+        // Create gradient background
+        const gradient = context.createLinearGradient(0, 0, canvas.width, canvas.height);
+        gradient.addColorStop(0, '#33ffff');
+        gradient.addColorStop(0.5, '#9b87f5');
+        gradient.addColorStop(1, '#33ffff');
+        
+        context.fillStyle = '#000000';
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Draw x64 text with shadow and glow
+        context.shadowColor = '#33ffff';
+        context.shadowBlur = 20;
+        context.fillStyle = gradient;
+        context.font = 'bold 120px Arial';
+        context.textAlign = 'center';
+        context.textBaseline = 'middle';
+        context.fillText('x64', canvas.width / 2, canvas.height / 2);
+        
+        // Add stroke for more definition
+        context.strokeStyle = '#ffffff';
+        context.lineWidth = 1;
+        context.strokeText('x64', canvas.width / 2, canvas.height / 2);
+        
+        // Create texture and sprite
+        const texture = new THREE.CanvasTexture(canvas);
+        const material = new THREE.SpriteMaterial({ 
+          map: texture,
+          transparent: true,
+          opacity: i === 0 ? 1 : 0.7 - (i * 0.05),
+        });
+        
+        const sprite = new THREE.Sprite(material);
+        sprite.scale.set(5, 2.5, 1);
+        sprite.position.z = -i * layerDepth;
+        textGroup.add(sprite);
       }
-    }
-    
-    // Add text "x64" to the processor - comment out for now until we can load fonts properly
-    // Instead of using TextGeometry with font, let's use a sprite with text
-    const createTextSprite = (text: string) => {
-      const canvas = document.createElement('canvas');
-      const context = canvas.getContext('2d');
-      if (!context) return;
       
-      canvas.width = 256;
-      canvas.height = 128;
-      
-      context.fillStyle = '#000000';
-      context.fillRect(0, 0, canvas.width, canvas.height);
-      context.font = '60px Arial';
-      context.fillStyle = '#13FDEE';
-      context.textAlign = 'center';
-      context.fillText(text, canvas.width / 2, canvas.height / 2 + 20);
-      
-      const texture = new THREE.CanvasTexture(canvas);
-      const material = new THREE.SpriteMaterial({ map: texture });
-      const sprite = new THREE.Sprite(material);
-      sprite.scale.set(2, 1, 1);
-      sprite.position.set(0, 1.2, 0);
-      return sprite;
+      return textGroup;
     };
     
-    const textSprite = createTextSprite('x64');
-    if (textSprite) {
-      processorGroup.add(textSprite);
+    const x64Text = createX64Text();
+    x64Group.add(x64Text);
+    
+    // Add particle system around the text
+    const particlesGeometry = new THREE.BufferGeometry();
+    const particleCount = 500;
+    const posArray = new Float32Array(particleCount * 3);
+    
+    for (let i = 0; i < particleCount * 3; i += 3) {
+      // Create particles in a volume around the text
+      posArray[i] = (Math.random() - 0.5) * 10;
+      posArray[i + 1] = (Math.random() - 0.5) * 5;
+      posArray[i + 2] = (Math.random() - 0.5) * 5;
     }
     
-    // Animation
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+    
+    const particlesMaterial = new THREE.PointsMaterial({
+      size: 0.05,
+      color: 0x9b87f5,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+    });
+    
+    const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+    x64Group.add(particlesMesh);
+    
+    // Add digital circuit lines around x64
+    const createCircuitLines = () => {
+      const linesGroup = new THREE.Group();
+      
+      // Create horizontal lines
+      for (let i = -2; i <= 2; i += 0.5) {
+        const lineGeometry = new THREE.BufferGeometry();
+        const points = [];
+        
+        // Create a wavy line with random length
+        const segmentCount = Math.floor(Math.random() * 10) + 10;
+        const lineLength = Math.random() * 6 + 4;
+        const startX = -lineLength / 2;
+        
+        for (let j = 0; j <= segmentCount; j++) {
+          const x = startX + (j / segmentCount) * lineLength;
+          const y = i + Math.sin(j * 0.2) * 0.05;
+          points.push(new THREE.Vector3(x, y, -2));
+        }
+        
+        lineGeometry.setFromPoints(points);
+        
+        const material = new THREE.LineBasicMaterial({ 
+          color: 0x33ffff,
+          transparent: true,
+          opacity: 0.6,
+        });
+        
+        const line = new THREE.Line(lineGeometry, material);
+        linesGroup.add(line);
+      }
+      
+      // Create vertical lines
+      for (let i = -6; i <= 6; i += 1) {
+        const lineGeometry = new THREE.BufferGeometry();
+        const points = [];
+        
+        const segmentCount = Math.floor(Math.random() * 5) + 5;
+        const lineHeight = Math.random() * 3 + 1;
+        const startY = -lineHeight / 2;
+        
+        for (let j = 0; j <= segmentCount; j++) {
+          const x = i + Math.sin(j * 0.2) * 0.05;
+          const y = startY + (j / segmentCount) * lineHeight;
+          points.push(new THREE.Vector3(x, y, -2));
+        }
+        
+        lineGeometry.setFromPoints(points);
+        
+        const material = new THREE.LineBasicMaterial({ 
+          color: 0xff6692,
+          transparent: true,
+          opacity: 0.4,
+        });
+        
+        const line = new THREE.Line(lineGeometry, material);
+        linesGroup.add(line);
+      }
+      
+      linesGroup.position.z = -1;
+      return linesGroup;
+    };
+    
+    const circuitLines = createCircuitLines();
+    x64Group.add(circuitLines);
+    
+    // Animation variables
+    let time = 0;
+    let mouseX = 0;
+    let mouseY = 0;
+    
+    // Animate all elements
     const animate = () => {
       requestAnimationFrame(animate);
+      time += 0.01;
       
-      processorGroup.rotation.y += 0.005;
+      // Animate x64 text group
+      x64Text.rotation.y = Math.sin(time * 0.5) * 0.1;
+      x64Text.rotation.x = Math.cos(time * 0.3) * 0.05;
       
-      // Pulse animation for the processor chip
-      const time = Date.now() * 0.001;
-      const pulseScale = 1 + Math.sin(time * 2) * 0.03;
-      processorChip.scale.set(1, pulseScale, 1);
+      // Pulse effect for text layers
+      for (let i = 0; i < x64Text.children.length; i++) {
+        const sprite = x64Text.children[i] as THREE.Sprite;
+        sprite.scale.x = 5 + Math.sin(time * 2 + i * 0.1) * 0.1;
+        sprite.scale.y = 2.5 + Math.sin(time * 2 + i * 0.1) * 0.05;
+      }
+      
+      // Animate particles
+      particlesMesh.rotation.y = time * 0.05;
+      particlesMesh.rotation.x = time * 0.025;
+      particlesMaterial.size = 0.05 + Math.sin(time) * 0.01;
+      
+      // Animate circuit lines
+      circuitLines.children.forEach((line, i) => {
+        const l = line as THREE.Line;
+        l.material.opacity = 0.4 + Math.sin(time + i * 0.1) * 0.2;
+      });
+      
+      // Interactive movement based on mouse position
+      x64Group.rotation.y = mouseX * 0.2 + Math.sin(time * 0.3) * 0.1;
+      x64Group.rotation.x = mouseY * 0.1 + Math.cos(time * 0.5) * 0.05;
       
       renderer.render(scene, camera);
     };
     
-    // Start animation
     animate();
     
     // Handle resize
@@ -163,23 +237,11 @@ const Solutions = () => {
     
     // Handle mouse movement for interactive effect
     const handleMouseMove = (event: MouseEvent) => {
-      const x = (event.clientX / window.innerWidth) * 2 - 1;
-      const y = -(event.clientY / window.innerHeight) * 2 + 1;
-      
-      processorGroup.rotation.y = x * 0.5 + time * 0.1;
-      processorGroup.rotation.x = y * 0.3;
+      mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+      mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
     };
     
-    let time = 0;
-    const autoRotate = () => {
-      time += 0.01;
-      processorGroup.rotation.y = Math.sin(time) * 0.5;
-      processorGroup.rotation.x = Math.cos(time) * 0.2;
-      requestAnimationFrame(autoRotate);
-    };
-    autoRotate();
-    
-    container.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove);
     
     // Clean up
     return () => {
@@ -187,7 +249,7 @@ const Solutions = () => {
         containerRef.current.removeChild(renderer.domElement);
       }
       window.removeEventListener('resize', handleResize);
-      container.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
 
