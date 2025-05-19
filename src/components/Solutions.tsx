@@ -1,8 +1,9 @@
+
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import * as THREE from "three";
-// Import these separately since they're not part of the core THREE export
+// Import these separately with proper typing
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 
@@ -102,19 +103,35 @@ const Solutions = () => {
       }
     }
     
-    // Add text "x64" on the processor
-    const fontLoader = new THREE.FontLoader();
-    const createTextGeometry = () => {
-      const textGeometry = new TextGeometry('x64', {
-        font: new THREE.Font({}),  // We need to load the font
-        size: 1.2,
-        height: 0.1,
-      });
-      const textMaterial = new THREE.MeshBasicMaterial({ color: 0x13FDEE });
-      const textMesh = new THREE.Mesh(textGeometry, textMaterial);
-      textMesh.position.set(-1, 1.2, 0);
-      processorGroup.add(textMesh);
+    // Add text "x64" to the processor - comment out for now until we can load fonts properly
+    // Instead of using TextGeometry with font, let's use a sprite with text
+    const createTextSprite = (text: string) => {
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      if (!context) return;
+      
+      canvas.width = 256;
+      canvas.height = 128;
+      
+      context.fillStyle = '#000000';
+      context.fillRect(0, 0, canvas.width, canvas.height);
+      context.font = '60px Arial';
+      context.fillStyle = '#13FDEE';
+      context.textAlign = 'center';
+      context.fillText(text, canvas.width / 2, canvas.height / 2 + 20);
+      
+      const texture = new THREE.CanvasTexture(canvas);
+      const material = new THREE.SpriteMaterial({ map: texture });
+      const sprite = new THREE.Sprite(material);
+      sprite.scale.set(2, 1, 1);
+      sprite.position.set(0, 1.2, 0);
+      return sprite;
     };
+    
+    const textSprite = createTextSprite('x64');
+    if (textSprite) {
+      processorGroup.add(textSprite);
+    }
     
     // Animation
     const animate = () => {
