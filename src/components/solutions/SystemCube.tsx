@@ -92,8 +92,9 @@ const SystemCube = ({ parentGroup }: SystemCubeProps) => {
       const cube = new THREE.Mesh(cubeGeometry, materials);
       cube.position.set(-3, 2, -1);
       
-      // Set identifier for animation
+      // Important: Set both type and isMesh for correct type checking
       cube.userData = { type: "cube" };
+      cube.isMesh = true;
       
       return cube;
     };

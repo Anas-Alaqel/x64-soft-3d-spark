@@ -15,6 +15,7 @@ import {
   animateCodeSegments,
   handleGroupMouseInteraction
 } from "./utils/animationUtils";
+import { setupScene, handleResize } from "./utils/sceneUtils";
 
 interface X64AnimationProps {
   containerRef: React.RefObject<HTMLDivElement>;
@@ -30,34 +31,13 @@ const X64Animation = ({ containerRef }: X64AnimationProps) => {
   useEffect(() => {
     if (!containerRef.current) return;
     
-    // Three.js setup
-    const container = containerRef.current;
-    const scene = new THREE.Scene();
+    // Set up the scene using helper function
+    const { scene, camera, renderer, x64Group } = setupScene(containerRef.current);
+    
+    // Store references
     sceneRef.current = scene;
-    
-    // Camera
-    const camera = new THREE.PerspectiveCamera(
-      60,
-      container.clientWidth / container.clientHeight,
-      0.1,
-      1000
-    );
-    camera.position.z = 8;
     cameraRef.current = camera;
-    
-    // Renderer
-    const renderer = new THREE.WebGLRenderer({ 
-      antialias: true,
-      alpha: true,
-    });
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    container.appendChild(renderer.domElement);
     rendererRef.current = renderer;
-    
-    // Create x64 display group
-    const x64Group = new THREE.Group();
-    scene.add(x64Group);
     x64GroupRef.current = x64Group;
     
     // Animation variables
@@ -70,19 +50,8 @@ const X64Animation = ({ containerRef }: X64AnimationProps) => {
       
       if (!x64GroupRef.current) return;
       
-      // Find child elements for animation
-      const x64Text = findChildByType(x64GroupRef.current, "text");
-      const particlesMesh = findChildByType(x64GroupRef.current, "particles") as THREE.Points | undefined;
-      const circuitLines = findChildByType(x64GroupRef.current, "circuits");
-      const systemCube = findChildByType(x64GroupRef.current, "cube") as THREE.Mesh | undefined;
-      const codeSegments = findChildByType(x64GroupRef.current, "code");
-      
-      // Animate each component
-      if (x64Text) animateX64Text(x64Text, time);
-      if (particlesMesh) animateParticles(particlesMesh, time);
-      if (circuitLines) animateCircuitLines(circuitLines, time);
-      if (systemCube) animateSystemCube(systemCube, time);
-      if (codeSegments) animateCodeSegments(codeSegments, time);
+      // Find and animate each component
+      animateComponents(x64GroupRef.current, time);
       
       // Interactive movement based on mouse position
       if (x64GroupRef.current) {
@@ -99,32 +68,38 @@ const X64Animation = ({ containerRef }: X64AnimationProps) => {
     
     animate();
     
-    // Handle resize
-    const handleResize = () => {
-      if (!containerRef.current || !cameraRef.current || !rendererRef.current) return;
-      
-      cameraRef.current.aspect = container.clientWidth / container.clientHeight;
-      cameraRef.current.updateProjectionMatrix();
-      rendererRef.current.setSize(container.clientWidth, container.clientHeight);
-    };
-    
-    window.addEventListener('resize', handleResize);
+    // Set up resize handler
+    const resizeHandler = () => handleResize(containerRef.current, cameraRef.current, rendererRef.current);
+    window.addEventListener('resize', resizeHandler);
     
     // Clean up
     return () => {
       if (rendererRef.current && containerRef.current && containerRef.current.contains(rendererRef.current.domElement)) {
         containerRef.current.removeChild(rendererRef.current.domElement);
       }
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('resize', resizeHandler);
     };
   }, [containerRef, mousePosition]);
   
+  // Helper function to animate all components
+  const animateComponents = (parent: THREE.Group, time: number) => {
+    const x64Text = findChildByType(parent, "text");
+    const particlesMesh = findChildByType(parent, "particles");
+    const circuitLines = findChildByType(parent, "circuits");
+    const systemCube = findChildByType(parent, "cube");
+    const codeSegments = findChildByType(parent, "code");
+    
+    // Animate each component if it exists
+    if (x64Text) animateX64Text(x64Text, time);
+    if (particlesMesh && particlesMesh.isPoints) animateParticles(particlesMesh as THREE.Points, time);
+    if (circuitLines) animateCircuitLines(circuitLines, time);
+    if (systemCube && systemCube.isMesh) animateSystemCube(systemCube as THREE.Mesh, time);
+    if (codeSegments) animateCodeSegments(codeSegments, time);
+  };
+  
   // Helper function to find child elements by their type
-  const findChildByType = (parent: THREE.Group, type: string): THREE.Group | undefined => {
-    // Each component will set its userData.type to identify itself
-    return parent.children.find(
-      child => child.userData?.type === type
-    ) as THREE.Group | undefined;
+  const findChildByType = (parent: THREE.Group, type: string): THREE.Object3D | undefined => {
+    return parent.children.find(child => child.userData?.type === type);
   };
   
   return (

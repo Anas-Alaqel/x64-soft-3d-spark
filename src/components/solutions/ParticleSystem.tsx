@@ -33,8 +33,9 @@ const ParticleSystem = ({ parentGroup }: ParticleSystemProps) => {
     });
     
     const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-    // Set identifier for animation
+    // Important: Set both type and isPoints for correct type checking
     particlesMesh.userData = { type: "particles" };
+    particlesMesh.isPoints = true;
     
     particlesRef.current = particlesMesh;
     parentGroup.add(particlesMesh);
