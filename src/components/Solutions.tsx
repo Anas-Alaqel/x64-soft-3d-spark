@@ -14,6 +14,37 @@ const Solutions = () => {
     "Fintech Applications"
   ];
 
+  // Add visibility detection for better performance
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const solutionsSection = document.getElementById('solutions');
+        if (solutionsSection) {
+          if (entry.isIntersecting) {
+            // Section is visible, enable 3D animations
+            solutionsSection.classList.remove('paused-animations');
+          } else {
+            // Section is not visible, pause 3D animations for performance
+            solutionsSection.classList.add('paused-animations');
+          }
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+
+    const solutionsSection = document.getElementById('solutions');
+    if (solutionsSection) {
+      observer.observe(solutionsSection);
+    }
+
+    return () => {
+      if (solutionsSection) {
+        observer.unobserve(solutionsSection);
+      }
+    };
+  }, []);
+
   return (
     <section id="solutions" className="section-padding relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-full bg-mesh opacity-40 -z-10"></div>

@@ -11,12 +11,15 @@ const ParticleSystem = ({ parentGroup }: ParticleSystemProps) => {
   const particlesRef = useRef<THREE.Points | null>(null);
   
   useEffect(() => {
-    // Add particle system around the text
+    // Add particle system around the text with optimized settings
     const { PARTICLE_COUNT, PARTICLE_SIZE, PARTICLE_COLOR } = PARTICLE_SYSTEM_OPTIONS;
-    const particlesGeometry = new THREE.BufferGeometry();
-    const posArray = new Float32Array(PARTICLE_COUNT * 3);
     
-    for (let i = 0; i < PARTICLE_COUNT * 3; i += 3) {
+    // Use a reduced particle count for better performance
+    const optimizedCount = Math.min(PARTICLE_COUNT, 300);
+    const particlesGeometry = new THREE.BufferGeometry();
+    const posArray = new Float32Array(optimizedCount * 3);
+    
+    for (let i = 0; i < optimizedCount * 3; i += 3) {
       // Create particles in a volume around the text
       posArray[i] = (Math.random() - 0.5) * 10;
       posArray[i + 1] = (Math.random() - 0.5) * 5;
@@ -30,10 +33,10 @@ const ParticleSystem = ({ parentGroup }: ParticleSystemProps) => {
       color: PARTICLE_COLOR,
       transparent: true,
       blending: THREE.AdditiveBlending,
+      sizeAttenuation: true
     });
     
     const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-    // Set type in userData only, not directly modifying readonly property
     particlesMesh.userData = { type: "particles" };
     
     particlesRef.current = particlesMesh;
@@ -41,7 +44,16 @@ const ParticleSystem = ({ parentGroup }: ParticleSystemProps) => {
     
     return () => {
       if (particlesRef.current) {
+        // Properly dispose of geometry and material
+        if (particlesRef.current.geometry) {
+          particlesRef.current.geometry.dispose();
+        }
+        if (particlesRef.current.material instanceof THREE.Material) {
+          particlesRef.current.material.dispose();
+        }
+        
         parentGroup.remove(particlesRef.current);
+        particlesRef.current = null;
       }
     };
   }, [parentGroup]);

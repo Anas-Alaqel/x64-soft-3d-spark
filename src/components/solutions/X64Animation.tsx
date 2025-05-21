@@ -15,7 +15,11 @@ import {
   animateCodeSegments,
   handleGroupMouseInteraction
 } from "./utils/animationUtils";
-import { setupScene, handleResize } from "./utils/sceneUtils";
+import { 
+  setupScene, 
+  handleResize, 
+  disposeResources 
+} from "./utils/sceneUtils";
 
 interface X64AnimationProps {
   containerRef: React.RefObject<HTMLDivElement>;
@@ -26,6 +30,7 @@ const X64Animation = ({ containerRef }: X64AnimationProps) => {
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const x64GroupRef = useRef<THREE.Group | null>(null);
+  const frameIdRef = useRef<number>(0);
   const mousePosition = useMouseInteraction();
   
   useEffect(() => {
@@ -43,9 +48,20 @@ const X64Animation = ({ containerRef }: X64AnimationProps) => {
     // Animation variables
     let time = 0;
     
+    // Throttle rendering for better performance
+    let lastRenderTime = 0;
+    const renderInterval = 1000 / 30; // Limit to 30fps
+    
     // Animate all elements
-    const animate = () => {
-      requestAnimationFrame(animate);
+    const animate = (currentTime: number) => {
+      frameIdRef.current = requestAnimationFrame(animate);
+      
+      // Skip frame if not enough time has passed (throttling)
+      if (currentTime - lastRenderTime < renderInterval) {
+        return;
+      }
+      
+      lastRenderTime = currentTime;
       time += 0.01;
       
       if (!x64GroupRef.current) return;
@@ -63,10 +79,12 @@ const X64Animation = ({ containerRef }: X64AnimationProps) => {
         );
       }
       
-      renderer.render(scene, camera);
+      if (rendererRef.current && sceneRef.current && cameraRef.current) {
+        rendererRef.current.render(sceneRef.current, cameraRef.current);
+      }
     };
     
-    animate();
+    animate(0);
     
     // Set up resize handler
     const resizeHandler = () => handleResize(containerRef.current, cameraRef.current, rendererRef.current);
@@ -74,9 +92,15 @@ const X64Animation = ({ containerRef }: X64AnimationProps) => {
     
     // Clean up
     return () => {
+      if (frameIdRef.current) {
+        cancelAnimationFrame(frameIdRef.current);
+      }
+      
       if (rendererRef.current && containerRef.current && containerRef.current.contains(rendererRef.current.domElement)) {
         containerRef.current.removeChild(rendererRef.current.domElement);
       }
+      
+      disposeResources(sceneRef.current, rendererRef.current);
       window.removeEventListener('resize', resizeHandler);
     };
   }, [containerRef, mousePosition]);
