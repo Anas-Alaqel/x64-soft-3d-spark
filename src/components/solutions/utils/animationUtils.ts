@@ -3,18 +3,19 @@ import * as THREE from "three";
 
 // Animation helper functions
 export const animateX64Text = (
-  textGroup: THREE.Group,
+  textGroup: THREE.Object3D,
   time: number
 ) => {
   textGroup.rotation.y = Math.sin(time * 0.5) * 0.1;
   textGroup.rotation.x = Math.cos(time * 0.3) * 0.05;
   
   // Pulse effect for text layers
-  for (let i = 0; i < textGroup.children.length; i++) {
-    const sprite = textGroup.children[i] as THREE.Sprite;
-    sprite.scale.x = 5 + Math.sin(time * 2 + i * 0.1) * 0.1;
-    sprite.scale.y = 2.5 + Math.sin(time * 2 + i * 0.1) * 0.05;
-  }
+  textGroup.children.forEach((child, i) => {
+    if (child instanceof THREE.Sprite) {
+      child.scale.x = 5 + Math.sin(time * 2 + i * 0.1) * 0.1;
+      child.scale.y = 2.5 + Math.sin(time * 2 + i * 0.1) * 0.05;
+    }
+  });
 };
 
 export const animateParticles = (
@@ -28,7 +29,7 @@ export const animateParticles = (
 };
 
 export const animateCircuitLines = (
-  circuitLines: THREE.Group,
+  circuitLines: THREE.Object3D,
   time: number
 ) => {
   circuitLines.children.forEach((object, i) => {
@@ -54,7 +55,7 @@ export const animateSystemCube = (
 };
 
 export const animateCodeSegments = (
-  codeSegments: THREE.Group,
+  codeSegments: THREE.Object3D,
   time: number
 ) => {
   codeSegments.children.forEach((object, i) => {
@@ -62,13 +63,15 @@ export const animateCodeSegments = (
       const userData = object.userData;
       
       // Orbit animation
-      const newAngle = userData.angle + time * userData.rotationSpeed;
-      object.position.x = Math.cos(newAngle) * userData.radius;
-      object.position.y = Math.sin(newAngle) * userData.radius;
-      
-      // Pulse scale effect
-      object.scale.x = 2 + Math.sin(time * 0.5 + i * 0.2) * 0.1;
-      object.scale.y = 0.5 + Math.sin(time * 0.5 + i * 0.2) * 0.05;
+      if (userData.angle !== undefined && userData.radius !== undefined && userData.rotationSpeed !== undefined) {
+        const newAngle = userData.angle + time * userData.rotationSpeed;
+        object.position.x = Math.cos(newAngle) * userData.radius;
+        object.position.y = Math.sin(newAngle) * userData.radius;
+        
+        // Pulse scale effect
+        object.scale.x = 2 + Math.sin(time * 0.5 + i * 0.2) * 0.1;
+        object.scale.y = 0.5 + Math.sin(time * 0.5 + i * 0.2) * 0.05;
+      }
     }
   });
 };

@@ -92,9 +92,8 @@ const SystemCube = ({ parentGroup }: SystemCubeProps) => {
       const cube = new THREE.Mesh(cubeGeometry, materials);
       cube.position.set(-3, 2, -1);
       
-      // Important: Set both type and isMesh for correct type checking
+      // Set type in userData only, not directly modifying readonly property
       cube.userData = { type: "cube" };
-      cube.isMesh = true;
       
       return cube;
     };

@@ -83,23 +83,21 @@ const X64Animation = ({ containerRef }: X64AnimationProps) => {
   
   // Helper function to animate all components
   const animateComponents = (parent: THREE.Group, time: number) => {
-    const x64Text = findChildByType(parent, "text");
-    const particlesMesh = findChildByType(parent, "particles");
-    const circuitLines = findChildByType(parent, "circuits");
-    const systemCube = findChildByType(parent, "cube");
-    const codeSegments = findChildByType(parent, "code");
-    
-    // Animate each component if it exists
-    if (x64Text) animateX64Text(x64Text, time);
-    if (particlesMesh && particlesMesh.isPoints) animateParticles(particlesMesh as THREE.Points, time);
-    if (circuitLines) animateCircuitLines(circuitLines, time);
-    if (systemCube && systemCube.isMesh) animateSystemCube(systemCube as THREE.Mesh, time);
-    if (codeSegments) animateCodeSegments(codeSegments, time);
-  };
-  
-  // Helper function to find child elements by their type
-  const findChildByType = (parent: THREE.Group, type: string): THREE.Object3D | undefined => {
-    return parent.children.find(child => child.userData?.type === type);
+    parent.children.forEach(child => {
+      const type = child.userData?.type;
+      
+      if (type === "text") {
+        animateX64Text(child, time);
+      } else if (type === "particles" && child instanceof THREE.Points) {
+        animateParticles(child, time);
+      } else if (type === "circuits") {
+        animateCircuitLines(child, time);
+      } else if (type === "cube" && child instanceof THREE.Mesh) {
+        animateSystemCube(child, time);
+      } else if (type === "code") {
+        animateCodeSegments(child, time);
+      }
+    });
   };
   
   return (

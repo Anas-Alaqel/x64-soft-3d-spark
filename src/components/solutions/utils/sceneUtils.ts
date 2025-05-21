@@ -18,6 +18,7 @@ export const setupScene = (container: HTMLDivElement) => {
   const renderer = new THREE.WebGLRenderer({ 
     antialias: true,
     alpha: true,
+    powerPreference: 'high-performance'
   });
   renderer.setSize(container.clientWidth, container.clientHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));

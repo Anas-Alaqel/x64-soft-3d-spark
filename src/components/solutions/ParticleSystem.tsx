@@ -33,9 +33,8 @@ const ParticleSystem = ({ parentGroup }: ParticleSystemProps) => {
     });
     
     const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-    // Important: Set both type and isPoints for correct type checking
+    // Set type in userData only, not directly modifying readonly property
     particlesMesh.userData = { type: "particles" };
-    particlesMesh.isPoints = true;
     
     particlesRef.current = particlesMesh;
     parentGroup.add(particlesMesh);
