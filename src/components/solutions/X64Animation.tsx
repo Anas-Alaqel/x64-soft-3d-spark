@@ -6,6 +6,15 @@ import ParticleSystem from "./ParticleSystem";
 import CircuitLines from "./CircuitLines";
 import SystemCube from "./SystemCube";
 import CodeSegments from "./CodeSegments";
+import { useMouseInteraction } from "./hooks/useMouseInteraction";
+import {
+  animateX64Text,
+  animateParticles,
+  animateCircuitLines,
+  animateSystemCube,
+  animateCodeSegments,
+  handleGroupMouseInteraction
+} from "./utils/animationUtils";
 
 interface X64AnimationProps {
   containerRef: React.RefObject<HTMLDivElement>;
@@ -16,6 +25,7 @@ const X64Animation = ({ containerRef }: X64AnimationProps) => {
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const x64GroupRef = useRef<THREE.Group | null>(null);
+  const mousePosition = useMouseInteraction();
   
   useEffect(() => {
     if (!containerRef.current) return;
@@ -52,8 +62,6 @@ const X64Animation = ({ containerRef }: X64AnimationProps) => {
     
     // Animation variables
     let time = 0;
-    let mouseX = 0;
-    let mouseY = 0;
     
     // Animate all elements
     const animate = () => {
@@ -62,99 +70,28 @@ const X64Animation = ({ containerRef }: X64AnimationProps) => {
       
       if (!x64GroupRef.current) return;
       
-      // Get x64Text child
-      const x64Text = x64GroupRef.current.children.find(
-        child => child.type === "Group" && child.children.some(c => c instanceof THREE.Sprite)
-      );
+      // Find child elements for animation
+      const x64Text = findChildByType(x64GroupRef.current, "text");
+      const particlesMesh = findChildByType(x64GroupRef.current, "particles") as THREE.Points | undefined;
+      const circuitLines = findChildByType(x64GroupRef.current, "circuits");
+      const systemCube = findChildByType(x64GroupRef.current, "cube") as THREE.Mesh | undefined;
+      const codeSegments = findChildByType(x64GroupRef.current, "code");
       
-      // Get particles child
-      const particlesMesh = x64GroupRef.current.children.find(
-        child => child instanceof THREE.Points
-      ) as THREE.Points | undefined;
-      
-      // Get circuit lines child
-      const circuitLines = x64GroupRef.current.children.find(
-        child => child.type === "Group" && child !== x64Text && child.children.some(c => c instanceof THREE.Line)
-      );
-      
-      // Get system cube
-      const systemCube = x64GroupRef.current.children.find(
-        child => child instanceof THREE.Mesh
-      ) as THREE.Mesh | undefined;
-      
-      // Get code segments
-      const codeSegments = x64GroupRef.current.children.find(
-        child => child.type === "Group" && 
-        child !== x64Text && 
-        child !== circuitLines &&
-        child.children.some(c => c instanceof THREE.Sprite && c.userData?.angle !== undefined)
-      );
-      
-      // Animate x64 text group
-      if (x64Text) {
-        x64Text.rotation.y = Math.sin(time * 0.5) * 0.1;
-        x64Text.rotation.x = Math.cos(time * 0.3) * 0.05;
-        
-        // Pulse effect for text layers
-        for (let i = 0; i < x64Text.children.length; i++) {
-          const sprite = x64Text.children[i] as THREE.Sprite;
-          sprite.scale.x = 5 + Math.sin(time * 2 + i * 0.1) * 0.1;
-          sprite.scale.y = 2.5 + Math.sin(time * 2 + i * 0.1) * 0.05;
-        }
-      }
-      
-      // Animate particles
-      if (particlesMesh) {
-        particlesMesh.rotation.y = time * 0.05;
-        particlesMesh.rotation.x = time * 0.025;
-        const particlesMaterial = particlesMesh.material as THREE.PointsMaterial;
-        particlesMaterial.size = 0.05 + Math.sin(time) * 0.01;
-      }
-      
-      // Animate circuit lines
-      if (circuitLines) {
-        circuitLines.children.forEach((object, i) => {
-          if (object instanceof THREE.Line) {
-            // Safely access material property knowing it's LineBasicMaterial
-            const lineMaterial = object.material as THREE.LineBasicMaterial;
-            lineMaterial.opacity = 0.4 + Math.sin(time + i * 0.1) * 0.2;
-          } else if (object instanceof THREE.Sprite) {
-            // Handle sprite animations for binary texts
-            object.position.y += Math.sin(time + i) * 0.005;
-            object.rotation.z = Math.sin(time * 0.5) * 0.1;
-          }
-        });
-      }
-      
-      // Animate system cube
-      if (systemCube) {
-        systemCube.rotation.x += 0.005;
-        systemCube.rotation.y += 0.007;
-        systemCube.position.y = 2 + Math.sin(time * 0.5) * 0.2;
-      }
-      
-      // Animate floating code segments
-      if (codeSegments) {
-        codeSegments.children.forEach((object, i) => {
-          if (object instanceof THREE.Sprite) {
-            const userData = object.userData;
-            
-            // Orbit animation
-            const newAngle = userData.angle + time * userData.rotationSpeed;
-            object.position.x = Math.cos(newAngle) * userData.radius;
-            object.position.y = Math.sin(newAngle) * userData.radius;
-            
-            // Pulse scale effect
-            object.scale.x = 2 + Math.sin(time * 0.5 + i * 0.2) * 0.1;
-            object.scale.y = 0.5 + Math.sin(time * 0.5 + i * 0.2) * 0.05;
-          }
-        });
-      }
+      // Animate each component
+      if (x64Text) animateX64Text(x64Text, time);
+      if (particlesMesh) animateParticles(particlesMesh, time);
+      if (circuitLines) animateCircuitLines(circuitLines, time);
+      if (systemCube) animateSystemCube(systemCube, time);
+      if (codeSegments) animateCodeSegments(codeSegments, time);
       
       // Interactive movement based on mouse position
       if (x64GroupRef.current) {
-        x64GroupRef.current.rotation.y = mouseX * 0.2 + Math.sin(time * 0.3) * 0.1;
-        x64GroupRef.current.rotation.x = mouseY * 0.1 + Math.cos(time * 0.5) * 0.05;
+        handleGroupMouseInteraction(
+          x64GroupRef.current, 
+          mousePosition.x, 
+          mousePosition.y, 
+          time
+        );
       }
       
       renderer.render(scene, camera);
@@ -173,23 +110,22 @@ const X64Animation = ({ containerRef }: X64AnimationProps) => {
     
     window.addEventListener('resize', handleResize);
     
-    // Handle mouse movement for interactive effect
-    const handleMouseMove = (event: MouseEvent) => {
-      mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-      mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-    };
-    
-    window.addEventListener('mousemove', handleMouseMove);
-    
     // Clean up
     return () => {
       if (rendererRef.current && containerRef.current && containerRef.current.contains(rendererRef.current.domElement)) {
         containerRef.current.removeChild(rendererRef.current.domElement);
       }
       window.removeEventListener('resize', handleResize);
-      window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [containerRef]);
+  }, [containerRef, mousePosition]);
+  
+  // Helper function to find child elements by their type
+  const findChildByType = (parent: THREE.Group, type: string): THREE.Group | undefined => {
+    // Each component will set its userData.type to identify itself
+    return parent.children.find(
+      child => child.userData?.type === type
+    ) as THREE.Group | undefined;
+  };
   
   return (
     <>

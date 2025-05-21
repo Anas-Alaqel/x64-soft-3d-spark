@@ -1,6 +1,7 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { CIRCUIT_OPTIONS } from "./utils/animationConstants";
 
 interface CircuitLinesProps {
   parentGroup: THREE.Group;
@@ -12,9 +13,13 @@ const CircuitLines = ({ parentGroup }: CircuitLinesProps) => {
   useEffect(() => {
     const createCircuitLines = () => {
       const linesGroup = new THREE.Group();
+      // Set identifier for animation
+      linesGroup.userData = { type: "circuits" };
+      
+      const { HORIZONTAL_LINES, VERTICAL_LINES, LINE_COLORS } = CIRCUIT_OPTIONS;
       
       // Create horizontal lines
-      for (let i = -2; i <= 2; i += 0.5) {
+      for (let i = HORIZONTAL_LINES.MIN; i <= HORIZONTAL_LINES.MAX; i += HORIZONTAL_LINES.STEP) {
         const lineGeometry = new THREE.BufferGeometry();
         const points = [];
         
@@ -32,7 +37,7 @@ const CircuitLines = ({ parentGroup }: CircuitLinesProps) => {
         lineGeometry.setFromPoints(points);
         
         const material = new THREE.LineBasicMaterial({ 
-          color: 0x33ffff,
+          color: LINE_COLORS.HORIZONTAL,
           transparent: true,
           opacity: 0.6,
         });
@@ -42,7 +47,7 @@ const CircuitLines = ({ parentGroup }: CircuitLinesProps) => {
       }
       
       // Create vertical lines
-      for (let i = -6; i <= 6; i += 1) {
+      for (let i = VERTICAL_LINES.MIN; i <= VERTICAL_LINES.MAX; i += VERTICAL_LINES.STEP) {
         const lineGeometry = new THREE.BufferGeometry();
         const points = [];
         
@@ -59,7 +64,7 @@ const CircuitLines = ({ parentGroup }: CircuitLinesProps) => {
         lineGeometry.setFromPoints(points);
         
         const material = new THREE.LineBasicMaterial({ 
-          color: 0xff6692,
+          color: LINE_COLORS.VERTICAL,
           transparent: true,
           opacity: 0.4,
         });

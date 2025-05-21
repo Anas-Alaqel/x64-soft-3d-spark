@@ -1,6 +1,7 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { PARTICLE_SYSTEM_OPTIONS } from "./utils/animationConstants";
 
 interface ParticleSystemProps {
   parentGroup: THREE.Group;
@@ -11,11 +12,11 @@ const ParticleSystem = ({ parentGroup }: ParticleSystemProps) => {
   
   useEffect(() => {
     // Add particle system around the text
+    const { PARTICLE_COUNT, PARTICLE_SIZE, PARTICLE_COLOR } = PARTICLE_SYSTEM_OPTIONS;
     const particlesGeometry = new THREE.BufferGeometry();
-    const particleCount = 500;
-    const posArray = new Float32Array(particleCount * 3);
+    const posArray = new Float32Array(PARTICLE_COUNT * 3);
     
-    for (let i = 0; i < particleCount * 3; i += 3) {
+    for (let i = 0; i < PARTICLE_COUNT * 3; i += 3) {
       // Create particles in a volume around the text
       posArray[i] = (Math.random() - 0.5) * 10;
       posArray[i + 1] = (Math.random() - 0.5) * 5;
@@ -25,13 +26,16 @@ const ParticleSystem = ({ parentGroup }: ParticleSystemProps) => {
     particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
     
     const particlesMaterial = new THREE.PointsMaterial({
-      size: 0.05,
-      color: 0x9b87f5,
+      size: PARTICLE_SIZE,
+      color: PARTICLE_COLOR,
       transparent: true,
       blending: THREE.AdditiveBlending,
     });
     
     const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+    // Set identifier for animation
+    particlesMesh.userData = { type: "particles" };
+    
     particlesRef.current = particlesMesh;
     parentGroup.add(particlesMesh);
     

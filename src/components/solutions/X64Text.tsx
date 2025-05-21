@@ -1,6 +1,7 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { TEXT_ANIMATION_OPTIONS } from "./utils/animationConstants";
 
 interface X64TextProps {
   parentGroup: THREE.Group;
@@ -13,11 +14,13 @@ const X64Text = ({ parentGroup }: X64TextProps) => {
     // Create spectacular x64 text
     const createX64Text = () => {
       // Create multiple layers for depth effect
-      const layers = 10;
-      const layerDepth = 0.05;
+      const { LAYERS, LAYER_DEPTH, BASE_SCALE_X, BASE_SCALE_Y } = TEXT_ANIMATION_OPTIONS;
       const textGroup = new THREE.Group();
       
-      for (let i = 0; i < layers; i++) {
+      // Set identifier for animation
+      textGroup.userData = { type: "text" };
+      
+      for (let i = 0; i < LAYERS; i++) {
         const canvas = document.createElement('canvas');
         canvas.width = 512;
         canvas.height = 256;
@@ -55,14 +58,14 @@ const X64Text = ({ parentGroup }: X64TextProps) => {
           transparent: true,
         });
         
-        // Set the opacity on the material directly (fixing the TypeScript error)
+        // Set the opacity on the material directly
         if (i > 0) {
           material.opacity = 0.7 - (i * 0.05);
         }
         
         const sprite = new THREE.Sprite(material);
-        sprite.scale.set(5, 2.5, 1);
-        sprite.position.z = -i * layerDepth;
+        sprite.scale.set(BASE_SCALE_X, BASE_SCALE_Y, 1);
+        sprite.position.z = -i * LAYER_DEPTH;
         textGroup.add(sprite);
       }
       

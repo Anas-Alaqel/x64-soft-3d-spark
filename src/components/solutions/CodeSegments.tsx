@@ -1,6 +1,7 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { CODE_SEGMENT_OPTIONS } from "./utils/animationConstants";
 
 interface CodeSegmentsProps {
   parentGroup: THREE.Group;
@@ -12,6 +13,10 @@ const CodeSegments = ({ parentGroup }: CodeSegmentsProps) => {
   useEffect(() => {
     const createCodeSegments = () => {
       const codeGroup = new THREE.Group();
+      // Set identifier for animation
+      codeGroup.userData = { type: "code" };
+      
+      const { RADIUS, BASE_SCALE_X, BASE_SCALE_Y } = CODE_SEGMENT_OPTIONS;
       
       const codeSnippets = [
         "int main() {",
@@ -49,11 +54,11 @@ const CodeSegments = ({ parentGroup }: CodeSegmentsProps) => {
         });
         
         const sprite = new THREE.Sprite(material);
-        sprite.scale.set(2, 0.5, 1);
+        sprite.scale.set(BASE_SCALE_X, BASE_SCALE_Y, 1);
         
         // Position in a circular pattern
         const angle = (index / codeSnippets.length) * Math.PI * 2;
-        const radius = 5;
+        const radius = RADIUS;
         sprite.position.x = Math.cos(angle) * radius;
         sprite.position.y = Math.sin(angle) * radius;
         sprite.position.z = -4;
