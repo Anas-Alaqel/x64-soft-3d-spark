@@ -5,11 +5,15 @@ import { motion } from "framer-motion";
 import { ThemeToggle } from "./ThemeToggle";
 import { LangToggle } from "./LangToggle";
 import { Menu, X } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { useLanguage } from "./LanguageProvider";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
+  const location = useLocation();
+  const { t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,10 +45,10 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    { href: "#about", label: "About" },
-    { href: "#services", label: "Services" },
-    { href: "#solutions", label: "Solutions" },
-    { href: "#contact", label: "Contact" }
+    { href: "/about", label: t("navbar.about") || "عن الشركة" },
+    { href: "/services", label: t("navbar.services") || "الخدمات" },
+    { href: "/solutions", label: t("navbar.solutions") || "الحلول" },
+    { href: "/contact", label: t("navbar.contact") || "اتصل بنا" }
   ];
 
   return (
@@ -57,8 +61,8 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto flex items-center justify-between">
-        <a 
-          href="#hero" 
+        <Link 
+          to="/" 
           className="flex items-center gap-2 z-50 group relative"
           onMouseMove={handleLogoHover}
           onMouseLeave={resetLogoRotation}
@@ -92,18 +96,22 @@ const Navbar = () => {
             </motion.span>
             <span className="absolute top-0 left-0 w-full h-full text-xl sm:text-2xl font-bold blur-sm text-primary/60 animate-pulse">x64-soft</span>
           </div>
-        </a>
+        </Link>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-6 lg:gap-8">
           {navLinks.map((link) => (
-            <a 
+            <Link 
               key={link.href}
-              href={link.href} 
-              className="text-foreground/80 hover:text-foreground transition-colors relative after:content-[''] after:absolute after:left-0 after:bottom-[-4px] after:w-0 after:h-[2px] after:bg-accent after:transition-all hover:after:w-full"
+              to={link.href} 
+              className={`transition-colors relative after:content-[''] after:absolute after:left-0 after:bottom-[-4px] after:w-0 after:h-[2px] after:bg-accent after:transition-all hover:after:w-full ${
+                location.pathname === link.href 
+                  ? "text-primary after:w-full" 
+                  : "text-foreground/80 hover:text-foreground"
+              }`}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </div>
 
@@ -111,10 +119,10 @@ const Navbar = () => {
           <LangToggle />
           <ThemeToggle />
           <Button variant="ghost" className="hidden md:flex hover:bg-primary/20">
-            Log In
+            {t("navbar.login") || "تسجيل الدخول"}
           </Button>
           <Button className="bg-primary hover:bg-primary/90 hidden sm:flex">
-            Get Started
+            {t("navbar.getStarted") || "ابدأ الآن"}
           </Button>
           <Button 
             variant="ghost" 
@@ -136,24 +144,29 @@ const Navbar = () => {
       >
         <div className="flex flex-col gap-6">
           {navLinks.map((link, index) => (
-            <motion.a
+            <motion.div
               key={link.href}
-              href={link.href}
-              className="text-lg font-medium py-2 border-b border-border"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 * index }}
-              onClick={() => setMobileMenuOpen(false)}
             >
-              {link.label}
-            </motion.a>
+              <Link
+                to={link.href}
+                className={`text-lg font-medium py-2 border-b border-border block ${
+                  location.pathname === link.href ? "text-primary" : ""
+                }`}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {link.label}
+              </Link>
+            </motion.div>
           ))}
           <div className="flex flex-col gap-3 mt-4">
             <Button variant="outline" className="w-full">
-              Log In
+              {t("navbar.login") || "تسجيل الدخول"}
             </Button>
             <Button className="w-full bg-primary hover:bg-primary/90">
-              Get Started
+              {t("navbar.getStarted") || "ابدأ الآن"}
             </Button>
           </div>
         </div>

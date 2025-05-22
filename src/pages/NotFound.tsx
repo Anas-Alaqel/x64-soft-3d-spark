@@ -1,24 +1,25 @@
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/components/LanguageProvider";
 
 const NotFound = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    console.error(
-      "404 Error: User attempted to access non-existent route:",
-      location.pathname
-    );
-  }, [location.pathname]);
+  const { t, currentLanguage } = useLanguage();
+  
+  // Fallback texts if translations are not available
+  const title = t("notFound.title") || "404 - الصفحة غير موجودة";
+  const description = t("notFound.description") || "عذراً، الصفحة التي تبحث عنها غير موجودة.";
+  const backToHome = t("notFound.backToHome") || "العودة إلى الصفحة الرئيسية";
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">404</h1>
-        <p className="text-xl text-gray-600 mb-4">Oops! Page not found</p>
-        <a href="/" className="text-blue-500 hover:text-blue-700 underline">
-          Return to Home
-        </a>
+    <div className="min-h-screen w-full flex items-center justify-center">
+      <div className="text-center space-y-5 p-6">
+        <div className="text-5xl md:text-7xl font-bold gradient-text mb-4">404</div>
+        <h1 className="text-2xl md:text-3xl font-semibold">{title}</h1>
+        <p className="text-foreground/70 max-w-md mx-auto">{description}</p>
+        <Button asChild className="mt-6">
+          <Link to="/">{backToHome}</Link>
+        </Button>
       </div>
     </div>
   );

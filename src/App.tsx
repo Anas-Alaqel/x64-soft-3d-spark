@@ -7,6 +7,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { LanguageProvider } from "./components/LanguageProvider";
 import Index from "./pages/Index";
+import AboutPage from "./pages/About";
+import ServicesPage from "./pages/Services";
+import SolutionsPage from "./pages/Solutions";
+import ContactPage from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 
 // Ensure query client is created with proper configuration
@@ -22,13 +26,17 @@ const queryClient = new QueryClient({
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider defaultTheme="dark">
-      <LanguageProvider defaultLanguage="en">
+      <LanguageProvider defaultLanguage="ar">
         <TooltipProvider>
           <Toaster />
           <Sonner />
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/services" element={<ServicesPage />} />
+              <Route path="/solutions" element={<SolutionsPage />} />
+              <Route path="/contact" element={<ContactPage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
