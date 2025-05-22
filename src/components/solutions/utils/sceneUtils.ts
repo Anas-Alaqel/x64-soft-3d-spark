@@ -26,8 +26,8 @@ export const setupScene = (container: HTMLDivElement) => {
   // Only use higher pixel ratio for high-end devices
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
   
-  // Enable texture compression
-  renderer.outputEncoding = THREE.sRGBEncoding;
+  // Update: Use newer color output encoding API
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
   
   // Add renderer to DOM
   container.appendChild(renderer.domElement);
@@ -92,21 +92,31 @@ export const disposeResources = (
 
 // Helper function to dispose of materials and their textures
 const disposeMaterial = (material: THREE.Material) => {
-  if (material instanceof THREE.MeshBasicMaterial ||
-      material instanceof THREE.MeshStandardMaterial ||
-      material instanceof THREE.MeshPhongMaterial) {
-    if (material.map) material.map.dispose();
-    if (material.lightMap) material.lightMap.dispose();
-    if (material.aoMap) material.aoMap.dispose();
+  // Handle common texture properties
+  if (material.map) material.map.dispose();
+  if ('lightMap' in material && material.lightMap) material.lightMap.dispose();
+  if ('aoMap' in material && material.aoMap) material.aoMap.dispose();
+  
+  // Handle specific material types with type guards
+  if (material instanceof THREE.MeshStandardMaterial) {
+    if (material.emissiveMap) material.emissiveMap.dispose();
+    if (material.normalMap) material.normalMap.dispose();
+    if (material.roughnessMap) material.roughnessMap.dispose();
+    if (material.metalnessMap) material.metalnessMap.dispose();
+    if (material.bumpMap) material.bumpMap.dispose();
+    if (material.displacementMap) material.displacementMap.dispose();
+  }
+  
+  if (material instanceof THREE.MeshPhongMaterial) {
     if (material.emissiveMap) material.emissiveMap.dispose();
     if (material.bumpMap) material.bumpMap.dispose();
     if (material.normalMap) material.normalMap.dispose();
     if (material.displacementMap) material.displacementMap.dispose();
-    if (material.roughnessMap) material.roughnessMap.dispose();
-    if (material.metalnessMap) material.metalnessMap.dispose();
-    if (material.alphaMap) material.alphaMap.dispose();
-    if (material.envMap) material.envMap.dispose();
   }
+  
+  // Handle environment maps for all material types
+  if ('envMap' in material && material.envMap) material.envMap.dispose();
+  if ('alphaMap' in material && material.alphaMap) material.alphaMap.dispose();
   
   material.dispose();
 };
