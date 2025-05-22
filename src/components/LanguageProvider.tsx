@@ -67,9 +67,53 @@ const translations: Record<string, Record<Language, string>> = {
     en: "Our Solutions",
     ar: "حلولنا"
   },
+  "solutions.erp": {
+    en: "Enterprise Resource Planning",
+    ar: "تخطيط موارد المؤسسات"
+  },
+  "solutions.crm": {
+    en: "Customer Relationship Management",
+    ar: "إدارة علاقات العملاء"
+  },
+  "solutions.bi": {
+    en: "Business Intelligence Tools",
+    ar: "أدوات ذكاء الأعمال"
+  },
+  "solutions.scm": {
+    en: "Supply Chain Management",
+    ar: "إدارة سلسلة التوريد"
+  },
+  "solutions.healthcare": {
+    en: "Healthcare Management Systems",
+    ar: "أنظمة إدارة الرعاية الصحية"
+  },
+  "solutions.ecommerce": {
+    en: "E-commerce Solutions",
+    ar: "حلول التجارة الإلكترونية"
+  },
+  "solutions.fintech": {
+    en: "Fintech Applications",
+    ar: "تطبيقات التكنولوجيا المالية"
+  },
   "contact.title": {
     en: "Contact Us",
     ar: "اتصل بنا"
+  },
+  "contact.name": {
+    en: "Name",
+    ar: "الاسم"
+  },
+  "contact.email": {
+    en: "Email",
+    ar: "البريد الإلكتروني"
+  },
+  "contact.message": {
+    en: "Message",
+    ar: "الرسالة"
+  },
+  "contact.submit": {
+    en: "Submit",
+    ar: "إرسال"
   },
   "footer.copyright": {
     en: "© 2025 All rights reserved",
@@ -116,8 +160,10 @@ export function LanguageProvider({
 
     if (language === "ar") {
       root.classList.add("rtl")
+      document.dir = "rtl";
     } else {
       root.classList.add("ltr")
+      document.dir = "ltr";
     }
   }, [language])
 

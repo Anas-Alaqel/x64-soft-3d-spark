@@ -92,25 +92,26 @@ export const disposeResources = (
 
 // Helper function to dispose of materials and their textures with proper type handling
 const disposeMaterial = (material: THREE.Material) => {
-  // Check common texture properties with type guards
-  const checkAndDispose = (prop: string, mat: any) => {
-    if (prop in mat && mat[prop] && typeof mat[prop].dispose === 'function') {
-      mat[prop].dispose();
-    }
-  };
-  
   // Handle material with map property (most material types)
-  if ('map' in material && material.map && material.map.dispose) {
+  if ('map' in material && material.map instanceof THREE.Texture) {
     material.map.dispose();
   }
   
-  // Handle common texture properties
+  // Handle common texture properties with type safety
+  const checkAndDispose = (propName: string, material: any) => {
+    if (propName in material && 
+        material[propName] instanceof THREE.Texture) {
+      material[propName].dispose();
+    }
+  };
+  
+  // Check common texture properties
   checkAndDispose('lightMap', material);
   checkAndDispose('aoMap', material);
   checkAndDispose('alphaMap', material);
   checkAndDispose('envMap', material);
   
-  // Handle specific material types with type guards
+  // Handle specific material types
   if (material instanceof THREE.MeshStandardMaterial) {
     checkAndDispose('emissiveMap', material);
     checkAndDispose('normalMap', material);
