@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ThemeToggle } from "./ThemeToggle";
 import { LangToggle } from "./LangToggle";
-import { Menu, X } from "lucide-react";
+import { Menu, X, LogIn } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useLanguage } from "./LanguageProvider";
 
@@ -118,10 +118,19 @@ const Navbar = () => {
         <div className="flex items-center gap-2 sm:gap-4 z-50">
           <LangToggle />
           <ThemeToggle />
-          <Button variant="ghost" className="hidden md:flex hover:bg-primary/20">
-            {t("navbar.login") || "تسجيل الدخول"}
+          <Button 
+            variant="ghost" 
+            className="hidden md:flex gap-1 hover:bg-primary/20"
+            asChild
+          >
+            <Link to="/login">
+              <LogIn className="w-4 h-4 mr-1" />
+              {t("navbar.login") || "تسجيل الدخول"}
+            </Link>
           </Button>
-          <Button className="bg-primary hover:bg-primary/90 hidden sm:flex">
+          <Button 
+            className="bg-primary hover:bg-primary/90 hidden sm:flex" 
+          >
             {t("navbar.getStarted") || "ابدأ الآن"}
           </Button>
           <Button 
@@ -162,8 +171,16 @@ const Navbar = () => {
             </motion.div>
           ))}
           <div className="flex flex-col gap-3 mt-4">
-            <Button variant="outline" className="w-full">
-              {t("navbar.login") || "تسجيل الدخول"}
+            <Button 
+              variant="outline" 
+              className="w-full" 
+              asChild
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <Link to="/login">
+                <LogIn className="w-4 h-4 mr-2" />
+                {t("navbar.login") || "تسجيل الدخول"}
+              </Link>
             </Button>
             <Button className="w-full bg-primary hover:bg-primary/90">
               {t("navbar.getStarted") || "ابدأ الآن"}

@@ -13,6 +13,7 @@ type LanguageProviderProps = {
 
 type LanguageProviderState = {
   language: Language
+  currentLanguage: Language  // Added this property
   setLanguage: (language: Language) => void
   t: (key: string) => string
 }
@@ -38,6 +39,30 @@ const translations: Record<string, Record<Language, string>> = {
   "nav.contact": {
     en: "Contact",
     ar: "اتصل بنا"
+  },
+  "navbar.about": {
+    en: "About",
+    ar: "عن الشركة"
+  },
+  "navbar.services": {
+    en: "Services",
+    ar: "الخدمات"
+  },
+  "navbar.solutions": {
+    en: "Solutions",
+    ar: "الحلول"
+  },
+  "navbar.contact": {
+    en: "Contact",
+    ar: "اتصل بنا"
+  },
+  "navbar.login": {
+    en: "Login",
+    ar: "تسجيل الدخول"
+  },
+  "navbar.getStarted": {
+    en: "Get Started",
+    ar: "ابدأ الآن"
   },
   "hero.title": {
     en: "Innovative Solutions for Modern Business",
@@ -115,6 +140,46 @@ const translations: Record<string, Record<Language, string>> = {
     en: "Submit",
     ar: "إرسال"
   },
+  "login.title": {
+    en: "Login to Your Account",
+    ar: "تسجيل الدخول إلى حسابك"
+  },
+  "login.email": {
+    en: "Email",
+    ar: "البريد الإلكتروني"
+  },
+  "login.password": {
+    en: "Password",
+    ar: "كلمة المرور"
+  },
+  "login.submit": {
+    en: "Login",
+    ar: "تسجيل الدخول"
+  },
+  "login.forgotPassword": {
+    en: "Forgot Password?",
+    ar: "نسيت كلمة المرور؟"
+  },
+  "login.noAccount": {
+    en: "Don't have an account?",
+    ar: "ليس لديك حساب؟"
+  },
+  "login.register": {
+    en: "Register",
+    ar: "التسجيل"
+  },
+  "notFound.title": {
+    en: "404 - Page Not Found",
+    ar: "404 - الصفحة غير موجودة"
+  },
+  "notFound.description": {
+    en: "Sorry, the page you are looking for does not exist.",
+    ar: "عذراً، الصفحة التي تبحث عنها غير موجودة."
+  },
+  "notFound.backToHome": {
+    en: "Back to Home",
+    ar: "العودة إلى الصفحة الرئيسية"
+  },
   "footer.copyright": {
     en: "© 2025 All rights reserved",
     ar: "© 2025 جميع الحقوق محفوظة"
@@ -131,6 +196,7 @@ const translations: Record<string, Record<Language, string>> = {
 
 const initialState: LanguageProviderState = {
   language: "en",
+  currentLanguage: "en", // Added this property
   setLanguage: () => null,
   t: (key: string) => key
 }
@@ -169,6 +235,7 @@ export function LanguageProvider({
 
   const value = {
     language,
+    currentLanguage: language, // Added this property
     setLanguage: (language: Language) => {
       localStorage.setItem(storageKey, language)
       setLanguage(language)

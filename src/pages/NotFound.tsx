@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/components/LanguageProvider";
 
 const NotFound = () => {
-  const { t, currentLanguage } = useLanguage();
+  const { t } = useLanguage();
   
   // Fallback texts if translations are not available
   const title = t("notFound.title") || "404 - الصفحة غير موجودة";

@@ -11,6 +11,7 @@ import AboutPage from "./pages/About";
 import ServicesPage from "./pages/Services";
 import SolutionsPage from "./pages/Solutions";
 import ContactPage from "./pages/Contact";
+import LoginPage from "./pages/Login";
 import NotFound from "./pages/NotFound";
 
 // Ensure query client is created with proper configuration
@@ -37,6 +38,7 @@ const App = () => (
               <Route path="/services" element={<ServicesPage />} />
               <Route path="/solutions" element={<SolutionsPage />} />
               <Route path="/contact" element={<ContactPage />} />
+              <Route path="/login" element={<LoginPage />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
