@@ -1,12 +1,35 @@
 
 import { motion } from "framer-motion";
+import { useLanguage } from "./LanguageProvider";
 
 const Footer = () => {
+  const { t } = useLanguage();
+  
   const links = {
-    company: ["About", "Careers", "Blog", "Partners"],
-    services: ["Web Development", "Mobile Apps", "Cloud Solutions", "AI Services"],
-    resources: ["Documentation", "Help Center", "Case Studies", "FAQs"],
-    legal: ["Privacy Policy", "Terms of Service", "Cookie Policy", "GDPR"]
+    company: [
+      { key: "footer.about", href: "/about" },
+      { key: "footer.careers", href: "#" },
+      { key: "footer.blog", href: "#" },
+      { key: "footer.partners", href: "#" }
+    ],
+    services: [
+      { key: "footer.webDev", href: "#" },
+      { key: "footer.mobileApps", href: "#" },
+      { key: "footer.cloudSolutions", href: "#" },
+      { key: "footer.aiServices", href: "#" }
+    ],
+    resources: [
+      { key: "footer.documentation", href: "#" },
+      { key: "footer.helpCenter", href: "#" },
+      { key: "footer.caseStudies", href: "#" },
+      { key: "footer.faqs", href: "#" }
+    ],
+    legal: [
+      { key: "footer.privacy", href: "#" },
+      { key: "footer.terms", href: "#" },
+      { key: "footer.cookie", href: "#" },
+      { key: "footer.gdpr", href: "#" }
+    ]
   };
 
   const socialLinks = [
@@ -33,7 +56,7 @@ const Footer = () => {
             >
               <h2 className="text-2xl font-bold gradient-text mb-4">x64-soft</h2>
               <p className="text-foreground/70 mb-6 max-w-md">
-                Empowering businesses with innovative software solutions that drive growth and efficiency in the digital age.
+                {t("footer.description")}
               </p>
               <div className="flex space-x-4">
                 {socialLinks.map((link) => (
@@ -56,12 +79,12 @@ const Footer = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            <h3 className="font-semibold mb-4">Company</h3>
+            <h3 className="font-semibold mb-4">{t("footer.company")}</h3>
             <ul className="space-y-2 md:space-y-3">
               {links.company.map((link) => (
-                <li key={link}>
-                  <a href="#" className="text-foreground/70 hover:text-foreground transition-colors">
-                    {link}
+                <li key={link.key}>
+                  <a href={link.href} className="text-foreground/70 hover:text-foreground transition-colors">
+                    {t(link.key)}
                   </a>
                 </li>
               ))}
@@ -74,12 +97,12 @@ const Footer = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <h3 className="font-semibold mb-4">Services</h3>
+            <h3 className="font-semibold mb-4">{t("footer.services")}</h3>
             <ul className="space-y-2 md:space-y-3">
               {links.services.map((link) => (
-                <li key={link}>
-                  <a href="#" className="text-foreground/70 hover:text-foreground transition-colors">
-                    {link}
+                <li key={link.key}>
+                  <a href={link.href} className="text-foreground/70 hover:text-foreground transition-colors">
+                    {t(link.key)}
                   </a>
                 </li>
               ))}
@@ -92,12 +115,12 @@ const Footer = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <h3 className="font-semibold mb-4">Legal</h3>
+            <h3 className="font-semibold mb-4">{t("footer.legal")}</h3>
             <ul className="space-y-2 md:space-y-3">
               {links.legal.map((link) => (
-                <li key={link}>
-                  <a href="#" className="text-foreground/70 hover:text-foreground transition-colors">
-                    {link}
+                <li key={link.key}>
+                  <a href={link.href} className="text-foreground/70 hover:text-foreground transition-colors">
+                    {t(link.key)}
                   </a>
                 </li>
               ))}
@@ -112,7 +135,7 @@ const Footer = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="border-t border-border mt-10 md:mt-12 pt-6 md:pt-8 text-center text-foreground/60 text-sm"
         >
-          <p>© {new Date().getFullYear()} x64-soft. All rights reserved.</p>
+          <p>{t("footer.copyright")}</p>
         </motion.div>
       </div>
     </footer>

@@ -1,13 +1,16 @@
 
 import { motion } from "framer-motion";
+import { useLanguage } from "./LanguageProvider";
 
-const AboutCard = ({ icon, title, description, delay, className = "" }: { 
+const AboutCard = ({ icon, titleKey, descriptionKey, delay, className = "" }: { 
   icon: string;
-  title: string;
-  description: string;
+  titleKey: string;
+  descriptionKey: string;
   delay: number;
   className?: string;
 }) => {
+  const { t } = useLanguage();
+  
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -17,33 +20,35 @@ const AboutCard = ({ icon, title, description, delay, className = "" }: {
       className={`glass-card p-6 h-full ${className}`}
     >
       <div className="text-3xl mb-4 text-primary">{icon}</div>
-      <h3 className="text-xl font-semibold mb-3">{title}</h3>
-      <p className="text-foreground/80">{description}</p>
+      <h3 className="text-xl font-semibold mb-3">{t(titleKey)}</h3>
+      <p className="text-foreground/80">{t(descriptionKey)}</p>
     </motion.div>
   );
 };
 
 const About = () => {
+  const { t } = useLanguage();
+  
   const features = [
     {
       icon: "🚀",
-      title: "Innovative Solutions",
-      description: "We create cutting-edge software tailored to solve complex business challenges."
+      titleKey: "about.innovativeSolutions",
+      descriptionKey: "about.innovativeSolutionsDesc"
     },
     {
       icon: "🔒",
-      title: "Security First",
-      description: "Our development practices prioritize data protection and system security."
+      titleKey: "about.securityFirst",
+      descriptionKey: "about.securityFirstDesc"
     },
     {
       icon: "🔄",
-      title: "Agile Methodology",
-      description: "We employ flexible development approaches to adapt to changing requirements."
+      titleKey: "about.agileMethodology",
+      descriptionKey: "about.agileMethodologyDesc"
     },
     {
       icon: "🌐",
-      title: "Global Expertise",
-      description: "Our team brings international experience to every project we undertake."
+      titleKey: "about.globalExpertise",
+      descriptionKey: "about.globalExpertiseDesc"
     }
   ];
 
@@ -58,10 +63,10 @@ const About = () => {
           className="text-center max-w-xl sm:max-w-2xl md:max-w-3xl mx-auto mb-12 md:mb-16"
         >
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 md:mb-6">
-            About <span className="gradient-text">x64-soft</span>
+            <span className="gradient-text">{t("about.aboutX64")}</span>
           </h2>
           <p className="text-base sm:text-lg text-foreground/80">
-            Founded on principles of innovation and technical excellence, x64-soft has been delivering transformative software solutions since 2015. Our team of experts combines deep technical knowledge with creative problem-solving to help businesses thrive in the digital era.
+            {t("about.foundedText")}
           </p>
         </motion.div>
 
@@ -70,8 +75,8 @@ const About = () => {
             <AboutCard
               key={index}
               icon={feature.icon}
-              title={feature.title}
-              description={feature.description}
+              titleKey={feature.titleKey}
+              descriptionKey={feature.descriptionKey}
               delay={index * 0.1}
               className={index % 2 === 0 ? "floating" : "pulse"}
             />
@@ -89,15 +94,15 @@ const About = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-center">
               <div className="text-center md:border-r border-border">
                 <div className="text-3xl md:text-4xl font-bold gradient-text">150+</div>
-                <p className="text-foreground/80 mt-2">Projects Completed</p>
+                <p className="text-foreground/80 mt-2">{t("about.projectsCompleted")}</p>
               </div>
               <div className="text-center md:border-r border-border">
                 <div className="text-3xl md:text-4xl font-bold gradient-text">45+</div>
-                <p className="text-foreground/80 mt-2">Team Members</p>
+                <p className="text-foreground/80 mt-2">{t("about.teamMembers")}</p>
               </div>
               <div className="text-center">
                 <div className="text-3xl md:text-4xl font-bold gradient-text">12+</div>
-                <p className="text-foreground/80 mt-2">Countries Served</p>
+                <p className="text-foreground/80 mt-2">{t("about.countriesServed")}</p>
               </div>
             </div>
           </div>

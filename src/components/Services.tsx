@@ -1,6 +1,7 @@
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "./LanguageProvider";
 
 const ServiceCard = ({ title, description, icon, index }: {
   title: string;
@@ -8,6 +9,8 @@ const ServiceCard = ({ title, description, icon, index }: {
   icon: string;
   index: number;
 }) => {
+  const { t } = useLanguage();
+  
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -23,43 +26,45 @@ const ServiceCard = ({ title, description, icon, index }: {
       <h3 className="text-xl font-semibold mb-3">{title}</h3>
       <p className="text-foreground/70 mb-6 flex-grow">{description}</p>
       <Button variant="ghost" className="justify-start p-0 hover:bg-transparent hover:text-primary">
-        Learn more →
+        {t("services.learnMore")} →
       </Button>
     </motion.div>
   );
 };
 
 const Services = () => {
+  const { t } = useLanguage();
+  
   const services = [
     {
       icon: "💻",
-      title: "Custom Software Development",
-      description: "Tailored solutions designed to address your specific business needs and challenges."
+      titleKey: "services.customSoftware",
+      descriptionKey: "services.customSoftwareDesc"
     },
     {
       icon: "📱",
-      title: "Mobile App Development",
-      description: "Native and cross-platform mobile applications that deliver exceptional user experiences."
+      titleKey: "services.mobileApp",
+      descriptionKey: "services.mobileAppDesc"
     },
     {
       icon: "☁️",
-      title: "Cloud Solutions",
-      description: "Scalable cloud architectures and migration services for improved performance and reliability."
+      titleKey: "services.cloud",
+      descriptionKey: "services.cloudDesc"
     },
     {
       icon: "🤖",
-      title: "AI & Machine Learning",
-      description: "Intelligent systems that analyze data, learn patterns, and make autonomous decisions."
+      titleKey: "services.ai",
+      descriptionKey: "services.aiDesc"
     },
     {
       icon: "🔐",
-      title: "Cybersecurity Services",
-      description: "Comprehensive security solutions to protect your data and systems from threats."
+      titleKey: "services.cybersecurity",
+      descriptionKey: "services.cybersecurityDesc"
     },
     {
       icon: "📊",
-      title: "Data Analytics",
-      description: "Transform raw data into actionable insights that drive strategic business decisions."
+      titleKey: "services.dataAnalytics",
+      descriptionKey: "services.dataAnalyticsDesc"
     }
   ];
 
@@ -74,10 +79,10 @@ const Services = () => {
           className="text-center max-w-xl sm:max-w-2xl md:max-w-3xl mx-auto mb-12 md:mb-16"
         >
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 md:mb-6">
-            Our <span className="gradient-text">Services</span>
+            <span className="gradient-text">{t("services.title")}</span>
           </h2>
           <p className="text-base sm:text-lg text-foreground/80">
-            We provide a comprehensive range of software development services to help businesses leverage technology for growth and innovation.
+            {t("services.subtitle")}
           </p>
         </motion.div>
 
@@ -86,8 +91,8 @@ const Services = () => {
             <ServiceCard
               key={index}
               icon={service.icon}
-              title={service.title}
-              description={service.description}
+              title={t(service.titleKey)}
+              description={t(service.descriptionKey)}
               index={index}
             />
           ))}
@@ -100,7 +105,7 @@ const Services = () => {
           className="mt-16 text-center"
         >
           <Button size="lg" className="bg-primary hover:bg-primary/90 glow">
-            View All Services
+            {t("services.viewAll")}
           </Button>
         </motion.div>
         

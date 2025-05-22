@@ -5,8 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import { useLanguage } from "./LanguageProvider";
 
 const Contact = () => {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -37,10 +39,10 @@ const Contact = () => {
           className="text-center max-w-3xl mx-auto mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Get In <span className="gradient-text">Touch</span>
+            <span className="gradient-text">{t("contact.title")}</span>
           </h2>
           <p className="text-lg text-foreground/80">
-            Have a project in mind or questions about our services? Reach out to us and our team will get back to you as soon as possible.
+            {t("contact.subtitle")}
           </p>
         </motion.div>
 
@@ -55,7 +57,7 @@ const Contact = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div className="space-y-2">
                   <label htmlFor="name" className="text-sm font-medium">
-                    Your Name
+                    {t("contact.name")}
                   </label>
                   <Input
                     id="name"
@@ -68,7 +70,7 @@ const Contact = () => {
                 </div>
                 <div className="space-y-2">
                   <label htmlFor="email" className="text-sm font-medium">
-                    Your Email
+                    {t("contact.email")}
                   </label>
                   <Input
                     id="email"
@@ -83,7 +85,7 @@ const Contact = () => {
               </div>
               <div className="space-y-2 mb-6">
                 <label htmlFor="subject" className="text-sm font-medium">
-                  Subject
+                  {t("contact.subject")}
                 </label>
                 <Input
                   id="subject"
@@ -96,7 +98,7 @@ const Contact = () => {
               </div>
               <div className="space-y-2 mb-6">
                 <label htmlFor="message" className="text-sm font-medium">
-                  Your Message
+                  {t("contact.message")}
                 </label>
                 <Textarea
                   id="message"
@@ -109,7 +111,7 @@ const Contact = () => {
                 />
               </div>
               <Button type="submit" className="w-full bg-primary hover:bg-primary/90">
-                Send Message
+                {t("contact.submit")}
               </Button>
             </form>
           </motion.div>
@@ -126,8 +128,8 @@ const Contact = () => {
                 <span className="text-lg">📍</span>
               </div>
               <div>
-                <h3 className="font-semibold mb-1">Office Location</h3>
-                <p className="text-foreground/70">123 Tech Plaza, Innovation District, City, Country</p>
+                <h3 className="font-semibold mb-1">{t("contact.office")}</h3>
+                <p className="text-foreground/70">{t("contact.officeAddress")}</p>
               </div>
             </div>
 
@@ -136,7 +138,7 @@ const Contact = () => {
                 <span className="text-lg">📞</span>
               </div>
               <div>
-                <h3 className="font-semibold mb-1">Contact Number</h3>
+                <h3 className="font-semibold mb-1">{t("contact.phone")}</h3>
                 <p className="text-foreground/70">+1 (555) 123-4567</p>
               </div>
             </div>
@@ -146,7 +148,7 @@ const Contact = () => {
                 <span className="text-lg">📧</span>
               </div>
               <div>
-                <h3 className="font-semibold mb-1">Email Address</h3>
+                <h3 className="font-semibold mb-1">{t("contact.emailAddress")}</h3>
                 <p className="text-foreground/70">info@x64-soft.com</p>
               </div>
             </div>
@@ -156,8 +158,8 @@ const Contact = () => {
                 <span className="text-lg">⏰</span>
               </div>
               <div>
-                <h3 className="font-semibold mb-1">Business Hours</h3>
-                <p className="text-foreground/70">Monday - Friday: 9:00 AM - 6:00 PM</p>
+                <h3 className="font-semibold mb-1">{t("contact.businessHours")}</h3>
+                <p className="text-foreground/70">{t("contact.hoursDetails")}</p>
               </div>
             </div>
           </motion.div>

@@ -21,8 +21,8 @@ const Login = () => {
     // Simulate login process
     setTimeout(() => {
       toast({
-        title: "Login Successful",
-        description: "Welcome back to X64-soft!",
+        title: t("login.success"),
+        description: t("login.welcome"),
       });
       setIsLoading(false);
     }, 1500);
@@ -37,7 +37,9 @@ const Login = () => {
         className="text-center"
       >
         <h1 className="text-3xl font-bold">{t("login.title")}</h1>
-        <div className="mt-2 text-muted-foreground">{t("login.noAccount")} <Button variant="link" className="p-0">{t("login.register")}</Button></div>
+        <div className="mt-2 text-muted-foreground">
+          {t("login.noAccount")} <Button variant="link" className="p-0">{t("login.register")}</Button>
+        </div>
       </motion.div>
 
       <motion.form 

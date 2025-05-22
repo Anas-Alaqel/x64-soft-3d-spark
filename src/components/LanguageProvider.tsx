@@ -13,13 +13,14 @@ type LanguageProviderProps = {
 
 type LanguageProviderState = {
   language: Language
-  currentLanguage: Language  // Added this property
+  currentLanguage: Language
   setLanguage: (language: Language) => void
   t: (key: string) => string
 }
 
-// الترجمات
+// Translations
 const translations: Record<string, Record<Language, string>> = {
+  // Navigation
   "nav.home": {
     en: "Home",
     ar: "الرئيسية"
@@ -64,6 +65,8 @@ const translations: Record<string, Record<Language, string>> = {
     en: "Get Started",
     ar: "ابدأ الآن"
   },
+  
+  // Hero section
   "hero.title": {
     en: "Innovative Solutions for Modern Business",
     ar: "حلول مبتكرة للأعمال الحديثة"
@@ -76,6 +79,8 @@ const translations: Record<string, Record<Language, string>> = {
     en: "Get Started",
     ar: "ابدأ الآن"
   },
+  
+  // About section
   "about.title": {
     en: "About Us",
     ar: "عن الشركة"
@@ -84,10 +89,126 @@ const translations: Record<string, Record<Language, string>> = {
     en: "We are a team of experts dedicated to providing innovative solutions for businesses of all sizes.",
     ar: "نحن فريق من الخبراء مكرسون لتقديم حلول مبتكرة للشركات بكافة أحجامها."
   },
+  "about.aboutX64": {
+    en: "About x64-soft",
+    ar: "عن شركة إكس 64 سوفت"
+  },
+  "about.foundedText": {
+    en: "Founded on principles of innovation and technical excellence, x64-soft has been delivering transformative software solutions since 2015. Our team of experts combines deep technical knowledge with creative problem-solving to help businesses thrive in the digital era.",
+    ar: "تأسست على مبادئ الابتكار والتميز التقني، قدمت إكس 64 سوفت حلولًا برمجية تحويلية منذ عام 2015. يجمع فريق الخبراء لدينا بين المعرفة التقنية العميقة وحل المشكلات بطرق إبداعية لمساعدة الشركات على الازدهار في العصر الرقمي."
+  },
+  "about.innovativeSolutions": {
+    en: "Innovative Solutions",
+    ar: "حلول مبتكرة"
+  },
+  "about.innovativeSolutionsDesc": {
+    en: "We create cutting-edge software tailored to solve complex business challenges.",
+    ar: "نبتكر برمجيات متطورة مصممة خصيصًا لحل تحديات الأعمال المعقدة."
+  },
+  "about.securityFirst": {
+    en: "Security First",
+    ar: "الأمان أولاً"
+  },
+  "about.securityFirstDesc": {
+    en: "Our development practices prioritize data protection and system security.",
+    ar: "تعطي ممارسات التطوير لدينا الأولوية لحماية البيانات وأمان الأنظمة."
+  },
+  "about.agileMethodology": {
+    en: "Agile Methodology",
+    ar: "منهجية أجايل"
+  },
+  "about.agileMethodologyDesc": {
+    en: "We employ flexible development approaches to adapt to changing requirements.",
+    ar: "نستخدم نهجًا مرنًا في التطوير للتكيف مع المتطلبات المتغيرة."
+  },
+  "about.globalExpertise": {
+    en: "Global Expertise",
+    ar: "خبرة عالمية"
+  },
+  "about.globalExpertiseDesc": {
+    en: "Our team brings international experience to every project we undertake.",
+    ar: "يجلب فريقنا خبرة دولية لكل مشروع نقوم به."
+  },
+  "about.projectsCompleted": {
+    en: "Projects Completed",
+    ar: "المشاريع المنجزة"
+  },
+  "about.teamMembers": {
+    en: "Team Members",
+    ar: "أعضاء الفريق"
+  },
+  "about.countriesServed": {
+    en: "Countries Served",
+    ar: "الدول المخدومة"
+  },
+  
+  // Services section
   "services.title": {
     en: "Our Services",
     ar: "خدماتنا"
   },
+  "services.subtitle": {
+    en: "We provide a comprehensive range of software development services to help businesses leverage technology for growth and innovation.",
+    ar: "نقدم مجموعة شاملة من خدمات تطوير البرمجيات لمساعدة الشركات على الاستفادة من التكنولوجيا للنمو والابتكار."
+  },
+  "services.customSoftware": {
+    en: "Custom Software Development",
+    ar: "تطوير البرمجيات المخصصة"
+  },
+  "services.customSoftwareDesc": {
+    en: "Tailored solutions designed to address your specific business needs and challenges.",
+    ar: "حلول مصممة خصيصًا لمعالجة احتياجات وتحديات عملك المحددة."
+  },
+  "services.mobileApp": {
+    en: "Mobile App Development",
+    ar: "تطوير تطبيقات الجوال"
+  },
+  "services.mobileAppDesc": {
+    en: "Native and cross-platform mobile applications that deliver exceptional user experiences.",
+    ar: "تطبيقات جوال أصلية ومتعددة المنصات تقدم تجارب استخدام استثنائية."
+  },
+  "services.cloud": {
+    en: "Cloud Solutions",
+    ar: "حلول سحابية"
+  },
+  "services.cloudDesc": {
+    en: "Scalable cloud architectures and migration services for improved performance and reliability.",
+    ar: "بنية سحابية قابلة للتوسع وخدمات الترحيل لتحسين الأداء والموثوقية."
+  },
+  "services.ai": {
+    en: "AI & Machine Learning",
+    ar: "الذكاء الاصطناعي والتعلم الآلي"
+  },
+  "services.aiDesc": {
+    en: "Intelligent systems that analyze data, learn patterns, and make autonomous decisions.",
+    ar: "أنظمة ذكية تحلل البيانات وتتعلم الأنماط وتتخذ قرارات مستقلة."
+  },
+  "services.cybersecurity": {
+    en: "Cybersecurity Services",
+    ar: "خدمات الأمن السيبراني"
+  },
+  "services.cybersecurityDesc": {
+    en: "Comprehensive security solutions to protect your data and systems from threats.",
+    ar: "حلول أمنية شاملة لحماية بياناتك وأنظمتك من التهديدات."
+  },
+  "services.dataAnalytics": {
+    en: "Data Analytics",
+    ar: "تحليل البيانات"
+  },
+  "services.dataAnalyticsDesc": {
+    en: "Transform raw data into actionable insights that drive strategic business decisions.",
+    ar: "تحويل البيانات الخام إلى رؤى قابلة للتنفيذ تدفع القرارات التجارية الاستراتيجية."
+  },
+  "services.viewAll": {
+    en: "View All Services",
+    ar: "عرض جميع الخدمات"
+  },
+  "services.learnMore": {
+    en: "Learn more",
+    ar: "اعرف المزيد"
+  },
+  
+  // Solutions section
   "solutions.title": {
     en: "Our Solutions",
     ar: "حلولنا"
@@ -120,26 +241,62 @@ const translations: Record<string, Record<Language, string>> = {
     en: "Fintech Applications",
     ar: "تطبيقات التكنولوجيا المالية"
   },
+  
+  // Contact section
   "contact.title": {
-    en: "Contact Us",
-    ar: "اتصل بنا"
+    en: "Get In Touch",
+    ar: "تواصل معنا"
+  },
+  "contact.subtitle": {
+    en: "Have a project in mind or questions about our services? Reach out to us and our team will get back to you as soon as possible.",
+    ar: "هل لديك مشروع في ذهنك أو أسئلة حول خدماتنا؟ تواصل معنا وسيرد فريقنا عليك في أقرب وقت ممكن."
   },
   "contact.name": {
-    en: "Name",
+    en: "Your Name",
     ar: "الاسم"
   },
   "contact.email": {
-    en: "Email",
+    en: "Your Email",
     ar: "البريد الإلكتروني"
   },
+  "contact.subject": {
+    en: "Subject",
+    ar: "الموضوع"
+  },
   "contact.message": {
-    en: "Message",
-    ar: "الرسالة"
+    en: "Your Message",
+    ar: "رسالتك"
   },
   "contact.submit": {
-    en: "Submit",
-    ar: "إرسال"
+    en: "Send Message",
+    ar: "إرسال الرسالة"
   },
+  "contact.office": {
+    en: "Office Location",
+    ar: "موقع المكتب"
+  },
+  "contact.officeAddress": {
+    en: "123 Tech Plaza, Innovation District, City, Country",
+    ar: "123 ساحة التكنولوجيا، حي الابتكار، المدينة، البلد"
+  },
+  "contact.phone": {
+    en: "Contact Number",
+    ar: "رقم الاتصال"
+  },
+  "contact.emailAddress": {
+    en: "Email Address",
+    ar: "عنوان البريد الإلكتروني"
+  },
+  "contact.businessHours": {
+    en: "Business Hours",
+    ar: "ساعات العمل"
+  },
+  "contact.hoursDetails": {
+    en: "Monday - Friday: 9:00 AM - 6:00 PM",
+    ar: "الاثنين - الجمعة: 9:00 صباحًا - 6:00 مساءً"
+  },
+  
+  // Login page
   "login.title": {
     en: "Login to Your Account",
     ar: "تسجيل الدخول إلى حسابك"
@@ -168,6 +325,16 @@ const translations: Record<string, Record<Language, string>> = {
     en: "Register",
     ar: "التسجيل"
   },
+  "login.success": {
+    en: "Login Successful",
+    ar: "تم تسجيل الدخول بنجاح"
+  },
+  "login.welcome": {
+    en: "Welcome back to X64-soft!",
+    ar: "مرحبا بعودتك إلى إكس 64 سوفت!"
+  },
+  
+  // 404 Page
   "notFound.title": {
     en: "404 - Page Not Found",
     ar: "404 - الصفحة غير موجودة"
@@ -180,9 +347,71 @@ const translations: Record<string, Record<Language, string>> = {
     en: "Back to Home",
     ar: "العودة إلى الصفحة الرئيسية"
   },
-  "footer.copyright": {
-    en: "© 2025 All rights reserved",
-    ar: "© 2025 جميع الحقوق محفوظة"
+  
+  // Footer
+  "footer.company": {
+    en: "Company",
+    ar: "الشركة"
+  },
+  "footer.about": {
+    en: "About",
+    ar: "عن الشركة"
+  },
+  "footer.careers": {
+    en: "Careers",
+    ar: "وظائف"
+  },
+  "footer.blog": {
+    en: "Blog",
+    ar: "المدونة"
+  },
+  "footer.partners": {
+    en: "Partners",
+    ar: "شركاء"
+  },
+  "footer.services": {
+    en: "Services",
+    ar: "الخدمات"
+  },
+  "footer.webDev": {
+    en: "Web Development",
+    ar: "تطوير الويب"
+  },
+  "footer.mobileApps": {
+    en: "Mobile Apps",
+    ar: "تطبيقات الجوال"
+  },
+  "footer.cloudSolutions": {
+    en: "Cloud Solutions",
+    ar: "حلول سحابية"
+  },
+  "footer.aiServices": {
+    en: "AI Services",
+    ar: "خدمات الذكاء الاصطناعي"
+  },
+  "footer.resources": {
+    en: "Resources",
+    ar: "الموارد"
+  },
+  "footer.documentation": {
+    en: "Documentation",
+    ar: "التوثيق"
+  },
+  "footer.helpCenter": {
+    en: "Help Center",
+    ar: "مركز المساعدة"
+  },
+  "footer.caseStudies": {
+    en: "Case Studies",
+    ar: "دراسات الحالة"
+  },
+  "footer.faqs": {
+    en: "FAQs",
+    ar: "الأسئلة الشائعة"
+  },
+  "footer.legal": {
+    en: "Legal",
+    ar: "قانوني"
   },
   "footer.privacy": {
     en: "Privacy Policy",
@@ -191,6 +420,22 @@ const translations: Record<string, Record<Language, string>> = {
   "footer.terms": {
     en: "Terms of Service",
     ar: "شروط الخدمة"
+  },
+  "footer.cookie": {
+    en: "Cookie Policy",
+    ar: "سياسة ملفات تعريف الارتباط"
+  },
+  "footer.gdpr": {
+    en: "GDPR",
+    ar: "اللائحة العامة لحماية البيانات"
+  },
+  "footer.copyright": {
+    en: "© 2025 All rights reserved",
+    ar: "© 2025 جميع الحقوق محفوظة"
+  },
+  "footer.description": {
+    en: "Empowering businesses with innovative software solutions that drive growth and efficiency in the digital age.",
+    ar: "تمكين الشركات بحلول برمجية مبتكرة تدفع النمو والكفاءة في العصر الرقمي."
   }
 }
 
@@ -213,12 +458,12 @@ export function LanguageProvider({
     () => (localStorage.getItem(storageKey) as Language) || defaultLanguage
   )
 
-  // وظيفة الترجمة
+  // Translation function
   const t = (key: string): string => {
     return translations[key]?.[language] || key
   }
 
-  // تعيين اتجاه النص
+  // Set text direction
   useEffect(() => {
     const root = window.document.documentElement
 
@@ -235,7 +480,7 @@ export function LanguageProvider({
 
   const value = {
     language,
-    currentLanguage: language, // Added this property
+    currentLanguage: language,
     setLanguage: (language: Language) => {
       localStorage.setItem(storageKey, language)
       setLanguage(language)
