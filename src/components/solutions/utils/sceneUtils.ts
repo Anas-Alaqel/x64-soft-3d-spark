@@ -90,33 +90,42 @@ export const disposeResources = (
   }
 };
 
-// Helper function to dispose of materials and their textures
+// Helper function to dispose of materials and their textures with proper type handling
 const disposeMaterial = (material: THREE.Material) => {
+  // Check common texture properties with type guards
+  const checkAndDispose = (prop: string, mat: any) => {
+    if (prop in mat && mat[prop] && typeof mat[prop].dispose === 'function') {
+      mat[prop].dispose();
+    }
+  };
+  
+  // Handle material with map property (most material types)
+  if ('map' in material && material.map && material.map.dispose) {
+    material.map.dispose();
+  }
+  
   // Handle common texture properties
-  if (material.map) material.map.dispose();
-  if ('lightMap' in material && material.lightMap) material.lightMap.dispose();
-  if ('aoMap' in material && material.aoMap) material.aoMap.dispose();
+  checkAndDispose('lightMap', material);
+  checkAndDispose('aoMap', material);
+  checkAndDispose('alphaMap', material);
+  checkAndDispose('envMap', material);
   
   // Handle specific material types with type guards
   if (material instanceof THREE.MeshStandardMaterial) {
-    if (material.emissiveMap) material.emissiveMap.dispose();
-    if (material.normalMap) material.normalMap.dispose();
-    if (material.roughnessMap) material.roughnessMap.dispose();
-    if (material.metalnessMap) material.metalnessMap.dispose();
-    if (material.bumpMap) material.bumpMap.dispose();
-    if (material.displacementMap) material.displacementMap.dispose();
+    checkAndDispose('emissiveMap', material);
+    checkAndDispose('normalMap', material);
+    checkAndDispose('roughnessMap', material);
+    checkAndDispose('metalnessMap', material);
+    checkAndDispose('bumpMap', material);
+    checkAndDispose('displacementMap', material);
   }
   
   if (material instanceof THREE.MeshPhongMaterial) {
-    if (material.emissiveMap) material.emissiveMap.dispose();
-    if (material.bumpMap) material.bumpMap.dispose();
-    if (material.normalMap) material.normalMap.dispose();
-    if (material.displacementMap) material.displacementMap.dispose();
+    checkAndDispose('emissiveMap', material);
+    checkAndDispose('bumpMap', material);
+    checkAndDispose('normalMap', material);
+    checkAndDispose('displacementMap', material);
   }
-  
-  // Handle environment maps for all material types
-  if ('envMap' in material && material.envMap) material.envMap.dispose();
-  if ('alphaMap' in material && material.alphaMap) material.alphaMap.dispose();
   
   material.dispose();
 };
