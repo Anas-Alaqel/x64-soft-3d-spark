@@ -213,33 +213,65 @@ const translations: Record<string, Record<Language, string>> = {
     en: "Our Solutions",
     ar: "حلولنا"
   },
+  "solutions.subtitle": {
+    en: "Comprehensive business solutions designed to drive growth and innovation across all industries.",
+    ar: "حلول أعمال شاملة مصممة لدفع النمو والابتكار في جميع الصناعات."
+  },
   "solutions.erp": {
     en: "Enterprise Resource Planning",
     ar: "تخطيط موارد المؤسسات"
+  },
+  "solutions.erpDesc": {
+    en: "Integrated business management solutions that streamline operations across all departments.",
+    ar: "حلول إدارة الأعمال المتكاملة التي تبسط العمليات عبر جميع الأقسام."
   },
   "solutions.crm": {
     en: "Customer Relationship Management",
     ar: "إدارة علاقات العملاء"
   },
+  "solutions.crmDesc": {
+    en: "Build stronger customer relationships with powerful CRM tools and analytics.",
+    ar: "بناء علاقات أقوى مع العملاء باستخدام أدوات CRM القوية والتحليلات."
+  },
   "solutions.bi": {
     en: "Business Intelligence Tools",
     ar: "أدوات ذكاء الأعمال"
+  },
+  "solutions.biDesc": {
+    en: "Data-driven insights and advanced analytics to inform strategic business decisions.",
+    ar: "رؤى مدفوعة بالبيانات وتحليلات متقدمة لاتخاذ قرارات تجارية استراتيجية."
   },
   "solutions.scm": {
     en: "Supply Chain Management",
     ar: "إدارة سلسلة التوريد"
   },
+  "solutions.scmDesc": {
+    en: "Optimize your supply chain with intelligent tracking and management systems.",
+    ar: "تحسين سلسلة التوريد باستخدام أنظمة التتبع والإدارة الذكية."
+  },
   "solutions.healthcare": {
     en: "Healthcare Management Systems",
     ar: "أنظمة إدارة الرعاية الصحية"
+  },
+  "solutions.healthcareDesc": {
+    en: "Digital health solutions that improve patient care and operational efficiency.",
+    ar: "حلول صحية رقمية تحسن رعاية المرضى والكفاءة التشغيلية."
   },
   "solutions.ecommerce": {
     en: "E-commerce Solutions",
     ar: "حلول التجارة الإلكترونية"
   },
+  "solutions.ecommerceDesc": {
+    en: "Complete online retail platforms with integrated payment and inventory management.",
+    ar: "منصات التجارة الإلكترونية الكاملة مع الدفع المتكامل وإدارة المخزون."
+  },
   "solutions.fintech": {
     en: "Fintech Applications",
     ar: "تطبيقات التكنولوجيا المالية"
+  },
+  "solutions.viewAll": {
+    en: "View All Solutions",
+    ar: "عرض جميع الحلول"
   },
   
   // Contact section
@@ -336,8 +368,8 @@ const translations: Record<string, Record<Language, string>> = {
   
   // 404 Page
   "notFound.title": {
-    en: "404 - Page Not Found",
-    ar: "404 - الصفحة غير موجودة"
+    en: "Page Not Found",
+    ar: "الصفحة غير موجودة"
   },
   "notFound.description": {
     en: "Sorry, the page you are looking for does not exist.",
@@ -441,7 +473,7 @@ const translations: Record<string, Record<Language, string>> = {
 
 const initialState: LanguageProviderState = {
   language: "en",
-  currentLanguage: "en", // Added this property
+  currentLanguage: "en",
   setLanguage: () => null,
   t: (key: string) => key
 }
