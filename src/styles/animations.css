@@ -69,7 +69,7 @@
   
   .glow::after {
     content: '';
-    @apply absolute inset-0 -z-5 rounded-inherit blur-lg opacity-40 bg-gradient-to-r from-accent via-primary to-accent transform scale-105;
+    @apply absolute inset-0 -z-10 rounded-inherit blur-lg opacity-40 bg-gradient-to-r from-accent via-primary to-accent transform scale-105;
     animation: glow-rotate 6s linear infinite reverse;
   }
   
