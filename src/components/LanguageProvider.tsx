@@ -1,4 +1,3 @@
-
 "use client"
 
 import { createContext, useContext, useEffect, useState } from "react"
@@ -78,6 +77,34 @@ const translations: Record<string, Record<Language, string>> = {
   "hero.cta": {
     en: "Get Started",
     ar: "ابدأ الآن"
+  },
+  "hero.revolutionary": {
+    en: "Revolutionary",
+    ar: "ثورية"
+  },
+  "hero.softwareSolutions": {
+    en: "Software Solutions",
+    ar: "حلول برمجية"
+  },
+  "hero.modernBusinesses": {
+    en: "for Modern Businesses",
+    ar: "للأعمال الحديثة"
+  },
+  "hero.description": {
+    en: "x64-soft delivers cutting-edge software solutions that transform businesses through innovation, efficiency, and technological excellence.",
+    ar: "تقدم إكس 64 سوفت حلولاً برمجية متطورة تحول الأعمال من خلال الابتكار والكفاءة والتميز التقني."
+  },
+  "hero.discoverSolutions": {
+    en: "Discover Solutions",
+    ar: "اكتشف الحلول"
+  },
+  "hero.contactUs": {
+    en: "Contact Us",
+    ar: "تواصل معنا"
+  },
+  "hero.trustedBy": {
+    en: "Trusted by industry leaders",
+    ar: "موثوق من قادة الصناعة"
   },
   
   // About section

@@ -1,7 +1,10 @@
 
 import { motion } from "framer-motion";
+import { useLanguage } from "../LanguageProvider";
 
 const AnimatedText = () => {
+  const { t } = useLanguage();
+  
   return (
     <div className="animated-words-container overflow-hidden">
       <div className="animated-words-wrapper inline">
@@ -17,7 +20,7 @@ const AnimatedText = () => {
           }}
           className="inline-block animate-word"
         >
-          <span className="bg-gradient-to-r from-primary to-[#9b87f5] text-transparent bg-clip-text animate-gradient">Revolutionary</span>
+          <span className="bg-gradient-to-r from-primary to-[#9b87f5] text-transparent bg-clip-text animate-gradient">{t("hero.revolutionary")}</span>
         </motion.span>{" "}
         <motion.span
           initial={{ opacity: 1 }}
@@ -31,7 +34,7 @@ const AnimatedText = () => {
           }}
           className="inline-block animate-word"
         >
-          <span className="bg-gradient-to-r from-[#9b87f5] to-[#D946EF] text-transparent bg-clip-text animate-gradient">Software Solutions</span>
+          <span className="bg-gradient-to-r from-[#9b87f5] to-[#D946EF] text-transparent bg-clip-text animate-gradient">{t("hero.softwareSolutions")}</span>
         </motion.span>{" "}
         <motion.span
           initial={{ opacity: 1 }}
@@ -45,7 +48,7 @@ const AnimatedText = () => {
           }}
           className="inline-block animate-word"
         >
-          <span className="bg-gradient-to-r from-[#D946EF] to-primary text-transparent bg-clip-text animate-gradient">for Modern Businesses</span>
+          <span className="bg-gradient-to-r from-[#D946EF] to-primary text-transparent bg-clip-text animate-gradient">{t("hero.modernBusinesses")}</span>
         </motion.span>
       </div>
     </div>
