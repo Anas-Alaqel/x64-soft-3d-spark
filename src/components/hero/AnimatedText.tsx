@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useLanguage } from "../LanguageProvider";
 
 const AnimatedText = () => {
-  const { t } = useLanguage();
+  const { t, currentLanguage } = useLanguage();
   
   const words = [
     {
@@ -24,7 +24,7 @@ const AnimatedText = () => {
   ];
   
   return (
-    <div className="animated-words-container overflow-hidden">
+    <div className="animated-words-container overflow-hidden" dir={currentLanguage === "ar" ? "rtl" : "ltr"}>
       <div className="animated-words-wrapper">
         {words.map((word, index) => (
           <span key={index}>
