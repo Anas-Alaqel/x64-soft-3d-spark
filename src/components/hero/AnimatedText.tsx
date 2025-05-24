@@ -5,51 +5,60 @@ import { useLanguage } from "../LanguageProvider";
 const AnimatedText = () => {
   const { t } = useLanguage();
   
+  const words = [
+    {
+      text: t("hero.revolutionary"),
+      gradient: "from-primary via-blue-500 to-primary",
+      delay: 0
+    },
+    {
+      text: t("hero.softwareSolutions"),
+      gradient: "from-accent via-purple-500 to-accent",
+      delay: 2
+    },
+    {
+      text: t("hero.modernBusinesses"),
+      gradient: "from-primary via-cyan-500 to-accent",
+      delay: 4
+    }
+  ];
+  
   return (
     <div className="animated-words-container overflow-hidden">
-      <div className="animated-words-wrapper inline">
-        <motion.span
-          initial={{ opacity: 1 }}
-          animate={{ opacity: [1, 1, 0.8, 1] }}
-          transition={{ 
-            duration: 6,
-            times: [0, 0.3, 0.5, 1],
-            repeat: Infinity,
-            repeatType: "loop",
-            delay: 0
-          }}
-          className="inline-block animate-word"
-        >
-          <span className="bg-gradient-to-r from-primary to-[#9b87f5] text-transparent bg-clip-text animate-gradient">{t("hero.revolutionary")}</span>
-        </motion.span>{" "}
-        <motion.span
-          initial={{ opacity: 1 }}
-          animate={{ opacity: [1, 1, 0.8, 1] }}
-          transition={{ 
-            duration: 6,
-            times: [0, 0.3, 0.5, 1],
-            repeat: Infinity,
-            repeatType: "loop",
-            delay: 2
-          }}
-          className="inline-block animate-word"
-        >
-          <span className="bg-gradient-to-r from-[#9b87f5] to-[#D946EF] text-transparent bg-clip-text animate-gradient">{t("hero.softwareSolutions")}</span>
-        </motion.span>{" "}
-        <motion.span
-          initial={{ opacity: 1 }}
-          animate={{ opacity: [1, 1, 0.8, 1] }}
-          transition={{ 
-            duration: 6,
-            times: [0, 0.3, 0.5, 1],
-            repeat: Infinity,
-            repeatType: "loop",
-            delay: 4
-          }}
-          className="inline-block animate-word"
-        >
-          <span className="bg-gradient-to-r from-[#D946EF] to-primary text-transparent bg-clip-text animate-gradient">{t("hero.modernBusinesses")}</span>
-        </motion.span>
+      <div className="animated-words-wrapper">
+        {words.map((word, index) => (
+          <span key={index}>
+            <motion.span
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ 
+                opacity: [0, 1, 1, 0.7, 1],
+                y: [20, 0, 0, 0, 0],
+                scale: [0.95, 1, 1, 1.02, 1]
+              }}
+              transition={{ 
+                duration: 6,
+                times: [0, 0.2, 0.4, 0.7, 1],
+                repeat: Infinity,
+                repeatType: "loop",
+                delay: word.delay,
+                ease: "easeInOut"
+              }}
+              className="inline-block animate-word relative"
+            >
+              <span className={`bg-gradient-to-r ${word.gradient} text-transparent bg-clip-text animate-gradient font-extrabold tracking-tight relative z-10`}>
+                {word.text}
+              </span>
+              <motion.span 
+                className={`absolute inset-0 bg-gradient-to-r ${word.gradient} text-transparent bg-clip-text blur-sm opacity-50 font-extrabold tracking-tight`}
+                animate={{ opacity: [0.3, 0.6, 0.3] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              >
+                {word.text}
+              </motion.span>
+            </motion.span>
+            {index < words.length - 1 && " "}
+          </span>
+        ))}
       </div>
     </div>
   );
