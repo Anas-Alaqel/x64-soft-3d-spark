@@ -110,9 +110,9 @@ export default {
 				'gradient': 'gradient-shift 8s ease infinite',
 			},
 			boxShadow: {
-				'glow-sm': '0 0 15px -3px rgba(var(--primary), 0.4)',
-				'glow': '0 0 25px -5px rgba(var(--primary), 0.4)',
-				'glow-lg': '0 0 35px -5px rgba(var(--primary), 0.4)',
+				'glow-sm': '0 0 15px -3px rgba(19, 253, 238, 0.4)',
+				'glow': '0 0 25px -5px rgba(19, 253, 238, 0.4)',
+				'glow-lg': '0 0 35px -5px rgba(19, 253, 238, 0.4)',
 			}
 		}
 	},
