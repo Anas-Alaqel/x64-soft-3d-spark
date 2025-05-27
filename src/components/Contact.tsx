@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { useLanguage } from "./LanguageProvider";
+import { MessageCircle } from "lucide-react";
 
 const Contact = () => {
   const { t } = useLanguage();
@@ -26,6 +27,13 @@ const Contact = () => {
     console.log("Form submitted:", formData);
     toast.success("Message sent successfully! We'll be in touch soon.");
     setFormData({ name: "", email: "", subject: "", message: "" });
+  };
+
+  const handleWhatsAppClick = () => {
+    const phoneNumber = "967774336315";
+    const message = "مرحباً، أود الاستفسار عن خدماتكم";
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
   };
 
   return (
@@ -139,7 +147,29 @@ const Contact = () => {
               </div>
               <div>
                 <h3 className="font-semibold mb-1">{t("contact.phone")}</h3>
-                <p className="text-foreground/70">+1 (555) 123-4567</p>
+                <a 
+                  href="tel:+967774336315" 
+                  className="text-foreground/70 hover:text-primary transition-colors"
+                >
+                  +967 774336315
+                </a>
+              </div>
+            </div>
+
+            <div className="glass-card p-6 flex items-start space-x-4">
+              <div className="w-10 h-10 rounded-full bg-green-600/20 flex items-center justify-center flex-shrink-0">
+                <MessageCircle className="w-5 h-5 text-green-600" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-semibold mb-2">واتساب</h3>
+                <Button
+                  onClick={handleWhatsAppClick}
+                  className="bg-green-600 hover:bg-green-700 text-white gap-2"
+                  size="sm"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  تواصل عبر الواتساب
+                </Button>
               </div>
             </div>
 

@@ -14,8 +14,10 @@ import { MessageCircle } from "lucide-react";
 
 const Index = () => {
   const handleChatClick = () => {
-    // يمكن إضافة وظيفة فتح chat أو WhatsApp هنا
-    console.log("Opening chat...");
+    const phoneNumber = "967774336315";
+    const message = "مرحباً، أود الاستفسار عن خدماتكم";
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
   };
 
   return (
@@ -31,12 +33,13 @@ const Index = () => {
       <Contact />
       <Footer />
       
-      {/* Floating Chat Button */}
+      {/* Floating WhatsApp Button */}
       <FloatingButton
         position="bottom-right"
         icon={<MessageCircle className="w-6 h-6" />}
-        tooltip="تواصل معنا"
+        tooltip="تواصل معنا عبر الواتساب"
         onClick={handleChatClick}
+        className="bg-green-600 hover:bg-green-700"
       />
     </div>
   );
