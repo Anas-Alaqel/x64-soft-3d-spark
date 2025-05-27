@@ -98,6 +98,30 @@ export default {
 				'gradient-shift': {
 					'0%, 100%': { 'background-position': '0% 50%' },
 					'50%': { 'background-position': '100% 50%' }
+				},
+				'bounce-gentle': {
+					'0%, 100%': { transform: 'translateY(0)' },
+					'50%': { transform: 'translateY(-5px)' }
+				},
+				'pulse-gentle': {
+					'0%, 100%': { opacity: '1', transform: 'scale(1)' },
+					'50%': { opacity: '0.8', transform: 'scale(1.05)' }
+				},
+				'wiggle': {
+					'0%, 100%': { transform: 'rotate(-3deg)' },
+					'50%': { transform: 'rotate(3deg)' }
+				},
+				'slide-up': {
+					'0%': { transform: 'translateY(100%)', opacity: '0' },
+					'100%': { transform: 'translateY(0)', opacity: '1' }
+				},
+				'slide-down': {
+					'0%': { transform: 'translateY(-100%)', opacity: '0' },
+					'100%': { transform: 'translateY(0)', opacity: '1' }
+				},
+				'zoom-in': {
+					'0%': { transform: 'scale(0.5)', opacity: '0' },
+					'100%': { transform: 'scale(1)', opacity: '1' }
 				}
 			},
 			animation: {
@@ -108,11 +132,37 @@ export default {
 				'spin-slow': 'spin-slow 20s linear infinite',
 				'shimmer': 'shimmer 6s linear infinite',
 				'gradient': 'gradient-shift 8s ease infinite',
+				'bounce-gentle': 'bounce-gentle 2s ease-in-out infinite',
+				'pulse-gentle': 'pulse-gentle 3s ease-in-out infinite',
+				'wiggle': 'wiggle 1s ease-in-out infinite',
+				'slide-up': 'slide-up 0.5s ease-out',
+				'slide-down': 'slide-down 0.5s ease-out',
+				'zoom-in': 'zoom-in 0.5s ease-out'
 			},
 			boxShadow: {
 				'glow-sm': '0 0 15px -3px rgba(19, 253, 238, 0.4)',
 				'glow': '0 0 25px -5px rgba(19, 253, 238, 0.4)',
 				'glow-lg': '0 0 35px -5px rgba(19, 253, 238, 0.4)',
+				'glow-xl': '0 0 50px -10px rgba(19, 253, 238, 0.6)',
+				'inner-glow': 'inset 0 0 20px rgba(19, 253, 238, 0.2)',
+				'soft': '0 10px 40px rgba(0, 0, 0, 0.1)',
+				'medium': '0 20px 60px rgba(0, 0, 0, 0.15)',
+				'hard': '0 30px 80px rgba(0, 0, 0, 0.2)'
+			},
+			backdropBlur: {
+				'xs': '2px',
+			},
+			spacing: {
+				'18': '4.5rem',
+				'88': '22rem',
+				'120': '30rem',
+			},
+			zIndex: {
+				'60': '60',
+				'70': '70',
+				'80': '80',
+				'90': '90',
+				'100': '100',
 			}
 		}
 	},
