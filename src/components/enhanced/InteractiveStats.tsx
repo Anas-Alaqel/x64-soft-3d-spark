@@ -39,18 +39,18 @@ const InteractiveStats = () => {
   ]
 
   return (
-    <section className="py-16 bg-gradient-to-b from-background to-card/30">
-      <div className="container mx-auto px-4">
+    <section className="py-12 sm:py-16 lg:py-20 xl:py-24 bg-gradient-to-b from-background to-card/30">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-12 lg:mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 gradient-text">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 sm:mb-4 gradient-text">
             {currentLanguage === "ar" ? "إنجازاتنا بالأرقام" : "Our Achievements in Numbers"}
           </h2>
-          <p className="text-lg text-foreground/70">
+          <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-foreground/70 max-w-2xl mx-auto px-4">
             {currentLanguage === "ar" 
               ? "نفخر بما حققناه من نجاحات مع عملائنا"
               : "We're proud of our successes with our clients"
@@ -58,7 +58,7 @@ const InteractiveStats = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
           {stats.map((stat, index) => (
             <motion.div
               key={index}
@@ -69,11 +69,11 @@ const InteractiveStats = () => {
             >
               <EnhancedCard 
                 variant="glass" 
-                className="p-6 text-center hover:scale-105 transition-transform"
+                className="p-4 sm:p-6 lg:p-8 text-center hover:scale-105 transition-transform h-full"
               >
-                <div className="text-4xl mb-4">{stat.icon}</div>
-                <h3 className="font-semibold mb-3 text-lg">{stat.title}</h3>
-                <div className="text-3xl font-bold mb-4 gradient-text">
+                <div className="text-3xl sm:text-4xl lg:text-5xl mb-3 sm:mb-4">{stat.icon}</div>
+                <h3 className="font-semibold mb-2 sm:mb-3 text-base sm:text-lg lg:text-xl">{stat.title}</h3>
+                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 gradient-text">
                   {stat.value}
                   {stat.max === 100 ? "%" : ""}
                 </div>
@@ -82,7 +82,7 @@ const InteractiveStats = () => {
                   max={stat.max}
                   color={stat.color}
                   showValue={false}
-                  className="mt-4"
+                  className="mt-3 sm:mt-4"
                 />
               </EnhancedCard>
             </motion.div>
