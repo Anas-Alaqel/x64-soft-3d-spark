@@ -39,145 +39,52 @@ const InteractiveStats = () => {
   ]
 
   return (
-    <section className="py-12 sm:py-16 lg:py-20 xl:py-24 hero-magical relative overflow-hidden">
-      {/* Background particles */}
-      <div className="particles-container">
-        {Array.from({ length: 15 }, (_, i) => (
-          <div
-            key={i}
-            className="particle"
-            style={{
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 8}s`,
-              animationDuration: `${8 + Math.random() * 4}s`
-            }}
-          />
-        ))}
-      </div>
-
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section className="py-16 bg-gradient-to-b from-background to-card/30">
+      <div className="container mx-auto px-4">
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-8 sm:mb-12 lg:mb-16"
+          className="text-center mb-12"
         >
-          <motion.h2 
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 sm:mb-4 text-magical neon-text"
-            animate={{ 
-              textShadow: [
-                "0 0 20px rgba(255, 107, 107, 0.5)",
-                "0 0 40px rgba(78, 205, 196, 0.5)",
-                "0 0 20px rgba(255, 107, 107, 0.5)"
-              ]
-            }}
-            transition={{ duration: 3, repeat: Infinity }}
-          >
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 gradient-text">
             {currentLanguage === "ar" ? "إنجازاتنا بالأرقام" : "Our Achievements in Numbers"}
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
-            className="text-sm sm:text-base lg:text-lg xl:text-xl text-foreground/70 max-w-2xl mx-auto px-4"
-          >
+          </h2>
+          <p className="text-lg text-foreground/70">
             {currentLanguage === "ar" 
               ? "نفخر بما حققناه من نجاحات مع عملائنا"
               : "We're proud of our successes with our clients"
             }
-          </motion.p>
+          </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 60, rotateY: -20 }}
-              whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ 
-                duration: 0.8, 
-                delay: index * 0.2,
-                type: "spring",
-                stiffness: 100
-              }}
-              className="perspective-1000"
+              transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <div className="magical-card morph-card p-4 sm:p-6 lg:p-8 text-center h-full energy-orb floating-3d">
-                {/* Icon with magical effect */}
-                <motion.div 
-                  className="text-3xl sm:text-4xl lg:text-5xl mb-3 sm:mb-4 relative"
-                  animate={{ 
-                    scale: [1, 1.1, 1],
-                    rotate: [0, 5, -5, 0]
-                  }}
-                  transition={{ 
-                    duration: 3, 
-                    repeat: Infinity,
-                    delay: index * 0.5
-                  }}
-                >
-                  <span className="relative z-10">{stat.icon}</span>
-                  <motion.div
-                    className="absolute inset-0 magical-gradient rounded-full filter blur-lg opacity-30"
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, delay: index * 0.3 }}
-                  />
-                </motion.div>
-
-                <h3 className="font-semibold mb-2 sm:mb-3 text-base sm:text-lg lg:text-xl text-magical">
-                  {stat.title}
-                </h3>
-
-                <motion.div 
-                  className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 text-magical neon-text"
-                  initial={{ scale: 0 }}
-                  whileInView={{ scale: 1 }}
-                  transition={{ 
-                    delay: 0.5 + index * 0.1,
-                    type: "spring",
-                    stiffness: 200
-                  }}
-                >
-                  <motion.span
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ duration: 2, delay: 1 + index * 0.2 }}
-                  >
-                    {stat.value}
-                    {stat.max === 100 ? "%" : ""}
-                  </motion.span>
-                </motion.div>
-
-                <motion.div
-                  initial={{ width: 0 }}
-                  whileInView={{ width: "100%" }}
-                  transition={{ delay: 1.5 + index * 0.1, duration: 1 }}
-                >
-                  <ProgressBar 
-                    value={stat.value} 
-                    max={stat.max}
-                    color={stat.color}
-                    showValue={false}
-                    className="mt-3 sm:mt-4 magical-gradient h-2 rounded-full overflow-hidden"
-                  />
-                </motion.div>
-
-                {/* Floating orb */}
-                <motion.div
-                  className="absolute -top-2 -right-2 w-4 h-4 magical-gradient rounded-full"
-                  animate={{ 
-                    y: [0, -10, 0],
-                    opacity: [0.5, 1, 0.5]
-                  }}
-                  transition={{ 
-                    duration: 2, 
-                    repeat: Infinity,
-                    delay: index * 0.4
-                  }}
+              <EnhancedCard 
+                variant="glass" 
+                className="p-6 text-center hover:scale-105 transition-transform"
+              >
+                <div className="text-4xl mb-4">{stat.icon}</div>
+                <h3 className="font-semibold mb-3 text-lg">{stat.title}</h3>
+                <div className="text-3xl font-bold mb-4 gradient-text">
+                  {stat.value}
+                  {stat.max === 100 ? "%" : ""}
+                </div>
+                <ProgressBar 
+                  value={stat.value} 
+                  max={stat.max}
+                  color={stat.color}
+                  showValue={false}
+                  className="mt-4"
                 />
-              </div>
+              </EnhancedCard>
             </motion.div>
           ))}
         </div>

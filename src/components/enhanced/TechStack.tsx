@@ -46,18 +46,18 @@ const TechStack = () => {
   ]
 
   return (
-    <section className="py-12 sm:py-16 lg:py-20 xl:py-24">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-16">
+      <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-8 sm:mb-12 lg:mb-16"
+          className="text-center mb-12"
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 sm:mb-4 gradient-text">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 gradient-text">
             {currentLanguage === "ar" ? "التقنيات التي نستخدمها" : "Technologies We Use"}
           </h2>
-          <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-foreground/70 max-w-2xl mx-auto px-4">
+          <p className="text-lg text-foreground/70">
             {currentLanguage === "ar" 
               ? "نستخدم أحدث التقنيات لضمان أفضل النتائج"
               : "We use the latest technologies to ensure the best results"
@@ -65,7 +65,7 @@ const TechStack = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {technologies.map((tech, index) => (
             <motion.div
               key={index}
@@ -80,19 +80,19 @@ const TechStack = () => {
               }}
               whileHover={{ y: -10 }}
             >
-              <EnhancedCard variant="gradient" className="p-4 sm:p-6 lg:p-8 h-full">
-                <div className="flex items-center mb-3 sm:mb-4">
-                  <div className="text-3xl sm:text-4xl lg:text-5xl mr-3 sm:mr-4">{tech.icon}</div>
+              <EnhancedCard variant="gradient" className="p-6 h-full">
+                <div className="flex items-center mb-4">
+                  <div className="text-4xl mr-4">{tech.icon}</div>
                   <div>
-                    <h3 className="text-lg sm:text-xl lg:text-2xl font-bold">{tech.name}</h3>
-                    <div className={`h-1 w-12 sm:w-16 lg:w-20 bg-gradient-to-r ${tech.color} rounded-full mt-2`}></div>
+                    <h3 className="text-xl font-bold">{tech.name}</h3>
+                    <div className={`h-1 w-16 bg-gradient-to-r ${tech.color} rounded-full mt-2`}></div>
                   </div>
                 </div>
-                <p className="text-sm sm:text-base text-foreground/80 leading-relaxed">{tech.description}</p>
+                <p className="text-foreground/80">{tech.description}</p>
                 
                 {/* Floating particles effect */}
-                <div className="absolute top-0 right-0 w-6 h-6 sm:w-8 sm:h-8 bg-primary/20 rounded-full blur-md animate-pulse"></div>
-                <div className="absolute bottom-0 left-0 w-4 h-4 sm:w-6 sm:h-6 bg-accent/20 rounded-full blur-md animate-pulse delay-1000"></div>
+                <div className="absolute top-0 right-0 w-8 h-8 bg-primary/20 rounded-full blur-md animate-pulse"></div>
+                <div className="absolute bottom-0 left-0 w-6 h-6 bg-accent/20 rounded-full blur-md animate-pulse delay-1000"></div>
               </EnhancedCard>
             </motion.div>
           ))}
