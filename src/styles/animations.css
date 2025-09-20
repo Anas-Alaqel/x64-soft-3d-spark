@@ -1,4 +1,8 @@
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @layer components {
   /* Enhanced Animated Words */
   .animated-words-container {
